@@ -1,62 +1,76 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import React from "react";
+import Logo from "./components/Logo";
 import Home from "./pages/Home";
 import Categories from "./pages/Categories";
 import SignIn from "./pages/SignIn";
 import Register from "./pages/Register";
 import styled from "styled-components";
 
-const NavBar = styled.nav`
-list-style: none;
+const NavBar = styled.header`
+  padding: 0px 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  max-height: 64px;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #4e5863;
+`;
 
-ul {
-  width: 120%;
-  font-size: 1.3em;
-  margin: 0;
-  padding: 1.3em;
-  import React, { useState } from "react";
-    background-color: #06EDBD;
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-evenly;
+const Ul = styled.ul`
+  list-style: none;
+`;
+
+const Li = styled.button`
+  display: inline-block;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+  margin: 0px 5px;
+  width: 150px;
+  padding: 9px 25px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+  background-color: rgba(97, 132, 152, 1);
+  :hover {
+    transition: 0.3s;
+    color: black;
+    background-color: rgba(0, 136, 169, 0.7);
   }
-  li:hover{
-    background-color: red;
-  }
-  Link:visited{
-    color: #FF00AC;
+  a {
+    color: white;
+    text-decoration: none;
   }
 `;
 
 const App = () => {
-
-
-
-
   return (
     <Router>
       <div>
         <NavBar>
-          <ul>
-            <li>
+          <Logo />
+          <Ul>
+            <Li>
               <Link to="/">Home</Link>
-            </li>
-            <li>
+            </Li>
+            <Li>
               <Link to="/categories">Categories</Link>
-            </li>
-            <li>
+            </Li>
+            <Li>
               <Link to="/signin">Sign in</Link>
-            </li>
-            <li>
+            </Li>
+            <Li>
               <Link to="/register">Register</Link>
-            </li>
-          </ul>
+            </Li>
+          </Ul>
         </NavBar>
 
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/categories">
             <Categories />

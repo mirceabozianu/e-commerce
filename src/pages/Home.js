@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CardList from "../components/CardList";
 
 const Home = () => {
   const [data, setData] = useState([]);
-  fetch("https://fakestoreapi.com/products")
+    useEffect(()=>{
+        fetch("https://fakestoreapi.com/products")
     .then((res) => res.json())
-    .then((json) => setData([...json]));
+    .then((json) => setData(json));
+    }, []);
 
   
   return <CardList items={data} />;
