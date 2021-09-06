@@ -1,12 +1,11 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import React, { useState } from "react";
+import React from "react";
 import Logo from "./components/Logo/Logo";
 import Home from "./pages/Home";
 import Categories from "./pages/Categories";
 import SignIn from "./pages/SignIn";
 import Register from "./pages/Register";
 import styled from "styled-components";
-import {auth, createUserProfileDocument} from "./firebase/utils/index";
 
 const NavBar = styled.header`
   padding: 0px 20px;
@@ -34,7 +33,7 @@ const Li = styled.button`
   margin: 0px 5px;
   width: 150px;
   padding: 9px 25px;
-  border-radius: 50px;
+  border-radius: 30px;
   border: none;
   cursor: pointer;
   transition: all 0.3s ease 0s;
@@ -53,11 +52,6 @@ const Li = styled.button`
 
 
 const App = () => {
-  const [token, setToken] = useState();
-
-  // if(!token) {
-  // //   return <SignIn setToken={setToken}/>
-  // // }
   return (
     <Router>
       <div>
@@ -68,7 +62,7 @@ const App = () => {
               <Link to="/">Home</Link>
             </Li>
             <Li>
-              <Link to="/categories">Categories</Link>
+              <Categories value="Categories"/>
             </Li>
             <Li>
               <Link to="/signin">Sign in</Link>
@@ -80,9 +74,6 @@ const App = () => {
         </NavBar>
 
         <Switch>
-          <Route path="/categories">
-            <Categories />
-          </Route>
           <Route path="/signin">
             <SignIn />
           </Route>

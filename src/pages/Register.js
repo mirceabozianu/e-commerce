@@ -2,7 +2,7 @@ import React from "react";
 import {Article, Main} from "../styled/Styles";
 
 const Register = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    //const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   return (
     <Article>
