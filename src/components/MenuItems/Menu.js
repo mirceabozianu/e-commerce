@@ -20,7 +20,7 @@ const Menu = ({ data }) => {
   return (
     <StyledMenu>
       {data.map((category, index) => (
-        <MenuItem category={category} imageSrc={images[index]} />
+        <MenuItem key={index} category={category} imageSrc={images[index]} />
       ))}
     </StyledMenu>
   );

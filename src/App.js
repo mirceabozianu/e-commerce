@@ -19,26 +19,21 @@ const NavBar = styled.header`
   background-color: #4e5863;
 `;
 
-const Ul = styled.ul`
+const NavUl = styled.ul`
   list-style: none;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
 `;
 
-const Li = styled.button`
-  display: inline-block;
+const NavLi = styled.li`
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   font-size: 14px;
   text-decoration: none;
   color: white;
-  margin: 0px 5px;
-  width: 150px;
-  padding: 9px 25px;
-  border-radius: 30px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease 0s;
-  background-color: rgba(97, 132, 152, 1);
-  :hover {
+  padding: 20px 30px;
+  margin :hover {
     transition: 0.3s;
     color: black;
     background-color: rgba(0, 136, 169, 0.7);
@@ -49,28 +44,26 @@ const Li = styled.button`
   }
 `;
 
-
-
 const App = () => {
   return (
     <Router>
       <div>
         <NavBar>
           <Logo />
-          <Ul>
-            <Li>
+          <NavUl>
+            <NavLi>
               <Link to="/">Home</Link>
-            </Li>
-            <Li>
-              <Categories value="Categories"/>
-            </Li>
-            <Li>
+            </NavLi>
+            <NavLi>
+              <Categories>Categories</Categories>
+            </NavLi>
+            <NavLi>
               <Link to="/signin">Sign in</Link>
-            </Li>
-            <Li>
+            </NavLi>
+            <NavLi>
               <Link to="/register">Register</Link>
-            </Li>
-          </Ul>
+            </NavLi>
+          </NavUl>
         </NavBar>
 
         <Switch>

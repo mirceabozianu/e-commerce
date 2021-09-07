@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Menu from "../components/MenuItems/Menu";
 import styled from "styled-components";
+import { getCategories } from "../services/api";
 
 const StyledHome = styled.div`
   width: 100%;
@@ -13,10 +14,8 @@ const StyledHome = styled.div`
 const Home = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products/categories")
-      .then((res) => res.json())
-      .then((json) => setData(json));
-  }, []);
+    getCategories().then(resp=>setData(resp));
+  },[]);
 
   return (
     <StyledHome>
