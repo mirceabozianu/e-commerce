@@ -26,3 +26,40 @@ export const Article = styled.article`
 export const Main = styled.main`
   padding: 2rem;
 `;
+
+export const NavBar = styled.header`
+  padding: 0px 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  max-height: 64px;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #4e5863;
+`;
+
+export const NavUl = styled.ul`
+  list-style: none;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+`;
+
+export const NavLi = styled.li`
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+  padding: 20px 30px;
+  margin :hover {
+    transition: 0.3s;
+    color: black;
+    background-color: rgba(0, 136, 169, 0.7);
+  }
+  a {
+    color: white;
+    text-decoration: none;
+  }
+`;
