@@ -32,7 +32,7 @@ const ContentWrapper = styled.div`
 
 const MenuItem = ({ category, imageSrc }) => {
   return (
-    <StyledMenuItem style={{backgroundImage: `url(${imageSrc})`}}>
+    <StyledMenuItem style={{ backgroundImage: `url(${imageSrc})` }}>
       <ContentWrapper>
         <h1>{category.toUpperCase()}</h1>
         <p>WINDOW SHOP</p>

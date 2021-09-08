@@ -48,9 +48,6 @@ const Li = styled.button`
     text-decoration: none;
   }
 `;
-
-
-
 const App = () => {
   return (
     <Router>
@@ -62,7 +59,7 @@ const App = () => {
               <Link to="/">Home</Link>
             </Li>
             <Li>
-              <Categories value="Categories"/>
+              <Categories value="Categories" />
             </Li>
             <Li>
               <Link to="/signin">Sign in</Link>

@@ -11,7 +11,6 @@ export default function SignIn({ setToken }) {
     setEmail("");
     setPassword("");
   };
-  
   return (
     <Article>
       <Main>
@@ -21,7 +20,7 @@ export default function SignIn({ setToken }) {
             <div>
               <label htmlFor="email">Email</label>
               <input
-                onChange={e=> setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 name="email"
                 id="email"
@@ -31,7 +30,7 @@ export default function SignIn({ setToken }) {
             <div>
               <label htmlFor="password">Password</label>
               <input
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 name="password"
                 id="password"
@@ -50,4 +49,3 @@ export default function SignIn({ setToken }) {
     </Article>
   );
 }
-

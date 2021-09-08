@@ -1,9 +1,7 @@
 import React from "react";
-import {Article, Main} from "../styled/Styles";
+import { Article, Main } from "../styled/Styles";
 
 const Register = () => {
-    //const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
   return (
     <Article>
       <Main>
@@ -30,7 +28,6 @@ const Register = () => {
           <div>
             <input onClick="" type="submit" value="Register" />
           </div>
-          
         </form>
       </Main>
     </Article>

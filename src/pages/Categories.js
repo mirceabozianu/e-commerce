@@ -11,7 +11,7 @@ const Dropdown = styled.div`
   }
 `;
 const DropdownContent = styled.div`
-  display: ${props => props.open ? "block" : "none"}
+  display: ${(props) => (props.open ? "block" : "none")}
   display: none;
   position: absolute;
   background-color: #f1f1f1;
@@ -28,12 +28,12 @@ const DropdownContent = styled.div`
 const Categories = ({ value }) => {
   return (
     <Dropdown>
-      <a>{value}</a>
+      <p>{value}</p>
       <DropdownContent>
-        <a href="#">Link 1</a>
-        <a href="#">Link 1</a>
-        <a href="#">Link 1</a>
-        <a href="#">Link 1</a>
+        <a href="/electronics">Link 1</a>
+        <a href="/jewelery">Link 1</a>
+        <a href="/men-clothes">Link 1</a>
+        <a href="/women-clothes">Link 1</a>
       </DropdownContent>
     </Dropdown>
   );
