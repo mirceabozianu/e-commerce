@@ -1,4 +1,4 @@
-import lscache from 'lscache';
+import lscache from "lscache";
 
 lscache.setBucket("auth");
 export const users = lscache.get("users") || [];

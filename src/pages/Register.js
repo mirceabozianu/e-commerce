@@ -45,7 +45,7 @@ const Register = () => {
   };
   const onBlurPasswordCheck = (event) => {
     event.preventDefault();
-    if (!(password===confirmPassword)) {
+    if (!(password === confirmPassword)) {
       setError((prevErrors) => ({
         ...prevErrors,
         password: "Passwords not matching",

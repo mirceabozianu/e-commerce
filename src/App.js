@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Logo from "./components/Logo/Logo";
 import Home from "./pages/Home";
@@ -7,7 +8,6 @@ import Register from "./pages/Register";
 import { NavBar, NavUl, NavLi } from "./styled/Styles";
 
 const App = () => {
-  
   return (
     <Router>
       <div>

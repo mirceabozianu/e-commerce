@@ -14,8 +14,8 @@ const StyledHome = styled.div`
 const Home = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
-    getCategories().then(resp=>setData(resp));
-  },[]);
+    getCategories().then((resp) => setData(resp));
+  }, []);
 
   return (
     <StyledHome>

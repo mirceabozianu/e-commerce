@@ -1,4 +1,3 @@
-
 export const getCategories = async () => {
   try {
     const categoriesResp = await fetch(
