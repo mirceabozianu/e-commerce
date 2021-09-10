@@ -1,10 +1,10 @@
 import React from "react";
-import { Article, Main } from "../styled/Styles";
+import { AuthContainer, AuthFormWrapper } from "../components/styledForm";
 
 const Register = () => {
   return (
-    <Article>
-      <Main>
+    <AuthContainer>
+      <AuthFormWrapper>
         <form>
           <fieldset>
             <legend>Register</legend>
@@ -29,8 +29,8 @@ const Register = () => {
             <input onClick="" type="submit" value="Register" />
           </div>
         </form>
-      </Main>
-    </Article>
+      </AuthFormWrapper>
+    </AuthContainer>
   );
 };
 export default Register;

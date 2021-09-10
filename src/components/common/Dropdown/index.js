@@ -4,8 +4,6 @@ import styled from "styled-components";
 const Dropdown = styled.div`
   position: relative;
   display: inline-block
-  //Show the dropdown menu on hover
-
   &:hover{
       background-color:white;
   }
@@ -25,7 +23,7 @@ const DropdownContent = styled.div`
     display: block;
   }
 `;
-const Categories = ({ value }) => {
+const DropdownMenu = ({ value }) => {
   return (
     <Dropdown>
       <p>{value}</p>
@@ -38,4 +36,4 @@ const Categories = ({ value }) => {
     </Dropdown>
   );
 };
-export default Categories;
+export default DropdownMenu;

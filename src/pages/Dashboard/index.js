@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Menu from "../components/MenuItems/Menu";
+import Menu from "./components/Categories/index";
 import styled from "styled-components";
+import { getCategories } from "../../services/api";
 
-const StyledHome = styled.div`
+const StyledDashboard = styled.div`
   width: 100%;
   height: auto;
   display: flex;
@@ -13,15 +14,17 @@ const StyledHome = styled.div`
 const Home = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products/categories")
-      .then((res) => res.json())
-      .then((json) => setData(json));
+    async function fetchCategories() {
+      let res = await getCategories();
+      setData(res);
+    }
+    fetchCategories();
   }, []);
 
   return (
-    <StyledHome>
+    <StyledDashboard>
       <Menu data={data} />
-    </StyledHome>
+    </StyledDashboard>
   );
 };
 

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "../../assets/logo1.png";
+import logo from "../../../../assets/icons/logo.png";
+
 const StyledLogo = styled.div`
   box-sizing: border-box;
   display: inline-block;

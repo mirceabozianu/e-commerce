@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Article = styled.article`
+export const AuthContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,9 +20,7 @@ export const Article = styled.article`
   }
   max-width: 32rem;
   box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.2);
-  margin-right: auto;
-  margin-left: auto;
 `;
-export const Main = styled.main`
+export const AuthFormWrapper = styled.div`
   padding: 2rem;
 `;

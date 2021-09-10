@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Article, Main } from "../styled/Styles";
-import Button from "../components/Button/Button";
+import { AuthContainer, AuthFormWrapper } from "../components/styledForm";
 
-export default function SignIn({ setToken }) {
+export default function SignIn() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -12,8 +11,8 @@ export default function SignIn({ setToken }) {
     setPassword("");
   };
   return (
-    <Article>
-      <Main>
+    <AuthContainer>
+      <AuthFormWrapper>
         <form onSubmit={handleSubmit}>
           <fieldset>
             <legend>Sign In</legend>
@@ -39,13 +38,13 @@ export default function SignIn({ setToken }) {
             </div>
           </fieldset>
           <div>
-            <Button type="submit">Sign In</Button>
+            <button type="submit">Sign In</button>
           </div>
           <div>
-            <Button>Register</Button>
+            <button>Register</button>
           </div>
         </form>
-      </Main>
-    </Article>
+      </AuthFormWrapper>
+    </AuthContainer>
   );
 }
