@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Menu from "./components/Categories/index";
 import styled from "styled-components";
 import { getCategories } from "../../services/api";
+import Categories from "./components/Categories/index";
 
 const StyledDashboard = styled.div`
   width: 100%;
@@ -15,7 +15,7 @@ const Home = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     async function fetchCategories() {
-      let res = await getCategories();
+      const res = await getCategories();
       setData(res);
     }
     fetchCategories();
@@ -23,7 +23,7 @@ const Home = () => {
 
   return (
     <StyledDashboard>
-      <Menu data={data} />
+      <Categories data={data} />
     </StyledDashboard>
   );
 };

@@ -16,14 +16,14 @@ const StyledNavBar = styled.header`
   background-color: #4e5863;
 `;
 
-const StyledUl = styled.ul`
+const NavigationList = styled.ul`
   list-style: none;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
 `;
 
-const StyledLi = styled.li`
+const NavigationListItem = styled.li`
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   font-size: 14px;
@@ -45,20 +45,20 @@ const NavBar = () => {
   return (
     <StyledNavBar>
       <Logo />
-      <StyledUl>
-        <StyledLi>
+      <NavigationList>
+        <NavigationListItem>
           <Link to="/">Home</Link>
-        </StyledLi>
-        <StyledLi>
+        </NavigationListItem>
+        <NavigationListItem>
           <DropdownMenu>Categories</DropdownMenu>
-        </StyledLi>
-        <StyledLi>
+        </NavigationListItem>
+        <NavigationListItem>
           <Link to="/signin">Sign in</Link>
-        </StyledLi>
-        <StyledLi>
+        </NavigationListItem>
+        <NavigationListItem>
           <Link to="/register">Register</Link>
-        </StyledLi>
-      </StyledUl>
+        </NavigationListItem>
+      </NavigationList>
     </StyledNavBar>
   );
 };

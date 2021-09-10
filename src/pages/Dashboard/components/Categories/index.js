@@ -2,14 +2,14 @@ import React, { useMemo } from "react";
 import { parseCategories } from "../../../../utils/parsers";
 import styled from "styled-components";
 
-const StyledMenu = styled.div`
+const StyledCategories = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   padding: 20px 80px;
 `;
-const StyledMenuItem = styled.div`
+const StyledCategory = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,34 +45,34 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const MenuItem = ({ name, imageSrc }) => {
+const Category = ({ name, url, imageSrc }) => {
   return (
-    <StyledMenuItem imageSrc={imageSrc}>
+    <StyledCategory imageSrc={imageSrc}>
       <ContentWrapper>
         <h1>{name.toUpperCase()}</h1>
-        <a href={name}>WINDOW SHOP</a>
+        <a href={url}>WINDOW SHOP</a>
       </ContentWrapper>
-    </StyledMenuItem>
+    </StyledCategory>
   );
 };
 
-const Menu = ({ data }) => {
-  const newData = useMemo(() => {
+const Categories = ({ data }) => {
+  const categories = useMemo(() => {
     return parseCategories(data);
   }, [data]);
-  if (!newData?.length) return "Loading...";
+  if (!categories?.length) return "Loading...";
   return (
-    <StyledMenu>
-      {newData?.map((obj) => (
-        <MenuItem
-          key={obj.id}
-          name={obj.name}
-          url={obj.url}
-          imageSrc={obj.imageSrc}
+    <StyledCategories>
+      {categories?.map((category) => (
+        <Category
+          key={category.id}
+          name={category.name}
+          url={category.url}
+          imageSrc={category.imageSrc}
         />
       ))}
-    </StyledMenu>
+    </StyledCategories>
   );
 };
 
-export default Menu;
+export default Categories;

@@ -22,5 +22,5 @@ export const AuthContainer = styled.div`
   box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.2);
 `;
 export const AuthFormWrapper = styled.div`
-  padding: 2rem;
+  padding: 30px;
 `;

@@ -22,11 +22,15 @@ const Register = () => {
             </div>
             <div>
               <label htmlFor="password">Confirm Password</label>
-              <input type="password" name="password" id="password" />
+              <input
+                type="password"
+                name="confirm-password"
+                id="confirm-password"
+              />
             </div>
           </fieldset>
           <div>
-            <input onClick="" type="submit" value="Register" />
+            <input type="submit" value="Register" />
           </div>
         </form>
       </AuthFormWrapper>
