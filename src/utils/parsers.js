@@ -8,7 +8,7 @@ const images = [electronics, jewelery, men, women];
 export function parseCategories(data) {
   return data.map((item, index) => {
     const dataObj = {
-      name: `${item}`,
+      name: item,
       id: index,
       url: `/${item}`,
       imageSrc: images[index] ? images[index] : "NO IMAGE",

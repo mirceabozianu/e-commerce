@@ -64,12 +64,7 @@ const Categories = ({ data }) => {
   return (
     <StyledCategories>
       {categories?.map((category) => (
-        <Category
-          key={category.id}
-          name={category.name}
-          url={category.url}
-          imageSrc={category.imageSrc}
-        />
+        <Category key={category.id} {...category} />
       ))}
     </StyledCategories>
   );
