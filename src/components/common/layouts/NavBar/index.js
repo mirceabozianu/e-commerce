@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../../../../pages/Dashboard/components/Logo/index";
-import DropdownMenu from "../../Dropdown/index";
+import Dropdown from "../../Dropdown";
+import { getCategories } from "../../../../services/api";
 
 const StyledNavBar = styled.header`
   padding: 0px 20px;
@@ -30,6 +31,7 @@ const NavigationListItem = styled.li`
   text-decoration: none;
   color: white;
   padding: 20px 30px;
+  cursor: pointer;
   margin :hover {
     transition: 0.3s;
     color: black;
@@ -42,6 +44,14 @@ const NavigationListItem = styled.li`
 `;
 
 const NavBar = () => {
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    async function fetchCategories() {
+      const res = await getCategories();
+      setCategories(res);
+    }
+    fetchCategories();
+  }, []);
   return (
     <StyledNavBar>
       <Logo />
@@ -50,7 +60,7 @@ const NavBar = () => {
           <Link to="/">Home</Link>
         </NavigationListItem>
         <NavigationListItem>
-          <DropdownMenu>Categories</DropdownMenu>
+          <Dropdown data={categories} name="Categories" trigger="hover" />
         </NavigationListItem>
         <NavigationListItem>
           <Link to="/signin">Sign in</Link>

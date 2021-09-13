@@ -1,39 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
-const Dropdown = styled.div`
-  position: relative;
-  display: inline-block
-  &:hover{
-      background-color:white;
+const StyledDropdownItem = styled.a`
+  text-transform: capitalize;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  &:hover {
+    background-color: #4f7990;
   }
 `;
-const DropdownContent = styled.div`
-  display: ${(props) => (props.open ? "block" : "none")}
+const StyledDropdownContent = styled.div`
   display: none;
+  margin-left: -10px;
   position: absolute;
-  background-color: #f1f1f1;
+  background-color: #4e5863;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
 `;
-const DropdownMenu = ({ value }) => {
+const StyledDropdown = styled.div`
+  ${(props) =>
+    props.trigger === "click" && props.isOpen
+      ? `${StyledDropdownContent} {
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+      }`
+      : props.trigger === "hover"
+      ? `&:hover ${StyledDropdownContent} {
+            display: flex;
+            flex-flow: column wrap;
+            justify-content: center;
+          }`
+      : null}
+`;
+
+const Dropdown = ({ data, name, trigger }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <Dropdown>
-      <p>{value}</p>
-      <DropdownContent>
-        <a href="/electronics">Link 1</a>
-        <a href="/jewelery">Link 1</a>
-        <a href="/men-clothes">Link 1</a>
-        <a href="/women-clothes">Link 1</a>
-      </DropdownContent>
-    </Dropdown>
+    <StyledDropdown
+      trigger={trigger}
+      isOpen={isOpen}
+      onClick={() => setIsOpen(!isOpen)}
+    >
+      <div>{name}</div>
+      <StyledDropdownContent>
+        {data?.map((item, index) => (
+          <StyledDropdownItem href={`/${item}`} key={index}>
+            {item}
+          </StyledDropdownItem>
+        ))}
+      </StyledDropdownContent>
+    </StyledDropdown>
   );
 };
-export default DropdownMenu;
+export default Dropdown;

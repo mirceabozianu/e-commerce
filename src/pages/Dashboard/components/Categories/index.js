@@ -29,6 +29,7 @@ const ContentWrapper = styled.div`
   justify-content: center;
   align-items: center;
   color: white;
+
   h1 {
     font-size: 23px;
     margin-bottom: 20px;
