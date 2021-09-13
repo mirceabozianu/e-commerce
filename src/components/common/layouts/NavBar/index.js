@@ -15,6 +15,11 @@ const StyledNavBar = styled.header`
   width: 100%;
   box-sizing: border-box;
   background-color: #4e5863;
+  color: white;
+  a {
+    color: white;
+    text-decoration: none;
+  }
 `;
 
 const NavigationList = styled.ul`
@@ -28,19 +33,7 @@ const NavigationListItem = styled.li`
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   font-size: 14px;
-  text-decoration: none;
-  color: white;
   padding: 20px 30px;
-  cursor: pointer;
-  margin :hover {
-    transition: 0.3s;
-    color: black;
-    background-color: rgba(0, 136, 169, 0.7);
-  }
-  a {
-    color: white;
-    text-decoration: none;
-  }
 `;
 
 const NavBar = () => {
@@ -60,7 +53,7 @@ const NavBar = () => {
           <Link to="/">Home</Link>
         </NavigationListItem>
         <NavigationListItem>
-          <Dropdown data={categories} name="Categories" trigger="hover" />
+          <Dropdown data={categories} name="Categories" trigger="click" />
         </NavigationListItem>
         <NavigationListItem>
           <Link to="/signin">Sign in</Link>

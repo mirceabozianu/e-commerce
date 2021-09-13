@@ -19,33 +19,40 @@ const StyledDropdownContent = styled.div`
   min-width: 160px;
   z-index: 1;
 `;
+const contentWrapperString = `display: flex;
+flex-flow: column wrap;
+justify-content: center`;
+
 const StyledDropdown = styled.div`
   ${(props) =>
     props.trigger === "click" && props.isOpen
       ? `${StyledDropdownContent} {
-        display: flex;
-        flex-flow: column wrap;
-        justify-content: center;
+        ${contentWrapperString}
       }`
       : props.trigger === "hover"
       ? `&:hover ${StyledDropdownContent} {
-            display: flex;
-            flex-flow: column wrap;
-            justify-content: center;
-          }`
+          ${contentWrapperString}
+        }`
       : null}
+`;
+
+const DropdownTitle = styled.div`
+  cursor: ${(props) => (props.trigger === "click" ? "pointer" : "default")};
 `;
 
 const Dropdown = ({ data, name, trigger }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const handleClick = () => {
+    setIsOpen((prevState) => !prevState);
+  };
 
   return (
     <StyledDropdown
       trigger={trigger}
       isOpen={isOpen}
-      onClick={() => setIsOpen(!isOpen)}
+      onClick={trigger === "click" ? handleClick : null}
     >
-      <div>{name}</div>
+      <DropdownTitle trigger={trigger}>{name}</DropdownTitle>
       <StyledDropdownContent>
         {data?.map((item, index) => (
           <StyledDropdownItem href={`/${item}`} key={index}>
