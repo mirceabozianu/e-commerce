@@ -53,7 +53,7 @@ const NavBar = () => {
           <Link to="/">Home</Link>
         </NavigationListItem>
         <NavigationListItem>
-          <Dropdown data={categories} name="Categories" trigger="click" />
+          <Dropdown data={categories} name="Categories" trigger="hover" />
         </NavigationListItem>
         <NavigationListItem>
           <Link to="/signin">Sign in</Link>

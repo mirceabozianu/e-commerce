@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledDropdownItem = styled.a`
   text-transform: capitalize;
@@ -19,21 +19,28 @@ const StyledDropdownContent = styled.div`
   min-width: 160px;
   z-index: 1;
 `;
-const contentWrapperString = `display: flex;
-flex-flow: column wrap;
-justify-content: center`;
+const showDropdownContent = css`
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+`;
 
 const StyledDropdown = styled.div`
   ${(props) =>
-    props.trigger === "click" && props.isOpen
-      ? `${StyledDropdownContent} {
-        ${contentWrapperString}
-      }`
-      : props.trigger === "hover"
-      ? `&:hover ${StyledDropdownContent} {
-          ${contentWrapperString}
-        }`
-      : null}
+    props.trigger === "click" &&
+    props.isOpen &&
+    css`
+      ${StyledDropdownContent} {
+        ${showDropdownContent}
+      }
+    `}
+  ${(props) =>
+    props.trigger === "hover" &&
+    css`
+      &:hover ${StyledDropdownContent} {
+        ${showDropdownContent}
+      }
+    `}
 `;
 
 const DropdownTitle = styled.div`
