@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../../../../pages/Dashboard/components/Logo/index";
 import Dropdown from "../../Dropdown";
-import { getCategories } from "../../../../services/api";
 
 const StyledNavBar = styled.header`
   padding: 0px 20px;
@@ -36,15 +35,7 @@ const NavigationListItem = styled.li`
   padding: 20px 30px;
 `;
 
-const NavBar = () => {
-  const [categories, setCategories] = useState([]);
-  useEffect(() => {
-    async function fetchCategories() {
-      const res = await getCategories();
-      setCategories(res);
-    }
-    fetchCategories();
-  }, []);
+const NavBar = ({ data }) => {
   return (
     <StyledNavBar>
       <Logo />
@@ -53,7 +44,7 @@ const NavBar = () => {
           <Link to="/">Home</Link>
         </NavigationListItem>
         <NavigationListItem>
-          <Dropdown data={categories} name="Categories" trigger="hover" />
+          <Dropdown data={data} name="Categories" trigger="hover" />
         </NavigationListItem>
         <NavigationListItem>
           <Link to="/signin">Sign in</Link>

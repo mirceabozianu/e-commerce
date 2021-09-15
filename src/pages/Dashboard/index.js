@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { getCategories } from "../../services/api";
 import Categories from "./components/Categories/index";
 
 const StyledDashboard = styled.div`
@@ -11,16 +10,7 @@ const StyledDashboard = styled.div`
   align-items: center;
 `;
 
-const Home = () => {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    async function fetchCategories() {
-      const res = await getCategories();
-      setData(res);
-    }
-    fetchCategories();
-  }, []);
-
+const Dashboard = ({ data }) => {
   return (
     <StyledDashboard>
       <Categories data={data} />
@@ -28,4 +18,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;
