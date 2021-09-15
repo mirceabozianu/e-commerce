@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Logo from "../../../../pages/Dashboard/components/Logo/index";
+import Logo from "pages/Dashboard/components/Logo/index";
 import DropdownMenu from "../../Dropdown/index";
 
 const StyledNavBar = styled.header`
