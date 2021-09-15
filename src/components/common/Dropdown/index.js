@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 
-const StyledDropdownItem = styled.a`
+const StyledLink = styled(Link)`
   text-transform: capitalize;
   padding: 12px 16px;
   text-decoration: none;
@@ -19,7 +20,7 @@ const StyledDropdownContent = styled.div`
   min-width: 160px;
   z-index: 1;
 `;
-const showDropdownContent = css`
+const visibleDropdownStyles = css`
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
@@ -31,14 +32,14 @@ const StyledDropdown = styled.div`
     props.isOpen &&
     css`
       ${StyledDropdownContent} {
-        ${showDropdownContent}
+        ${visibleDropdownStyles}
       }
     `}
   ${(props) =>
     props.trigger === "hover" &&
     css`
       &:hover ${StyledDropdownContent} {
-        ${showDropdownContent}
+        ${visibleDropdownStyles}
       }
     `}
 `;
@@ -50,21 +51,20 @@ const DropdownTitle = styled.div`
 const Dropdown = ({ data, name, trigger }) => {
   const [isOpen, setIsOpen] = useState(false);
   const handleClick = () => {
+    if (trigger !== "click") {
+      return;
+    }
     setIsOpen((prevState) => !prevState);
   };
 
   return (
-    <StyledDropdown
-      trigger={trigger}
-      isOpen={isOpen}
-      onClick={trigger === "click" ? handleClick : null}
-    >
+    <StyledDropdown trigger={trigger} isOpen={isOpen} onClick={handleClick}>
       <DropdownTitle trigger={trigger}>{name}</DropdownTitle>
       <StyledDropdownContent>
         {data?.map((item, index) => (
-          <StyledDropdownItem href={`/${item}`} key={index}>
+          <StyledLink to={`/${item}`} key={index}>
             {item}
-          </StyledDropdownItem>
+          </StyledLink>
         ))}
       </StyledDropdownContent>
     </StyledDropdown>
