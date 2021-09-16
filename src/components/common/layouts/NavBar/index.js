@@ -39,19 +39,16 @@ const NavBar = ({ data }) => {
   return (
     <StyledNavBar>
       <Logo />
-      <NavigationList>
-        <NavigationListItem>
-          <Link to="/">Home</Link>
-        </NavigationListItem>
-        <NavigationListItem>
-          <Dropdown data={data} name="Categories" trigger="hover" />
-        </NavigationListItem>
-        <NavigationListItem>
-          <Link to="/signin">Sign in</Link>
-        </NavigationListItem>
-        <NavigationListItem>
-          <Link to="/register">Register</Link>
-        </NavigationListItem>
+      <NavigationList data={data}>
+        {data.map((item) => (
+          <NavigationListItem key={item.key}>
+            {item.children ? (
+              <Dropdown data={item.children} name={item.name} trigger="hover" />
+            ) : (
+              <Link to={item.path}>{item.name}</Link>
+            )}
+          </NavigationListItem>
+        ))}
       </NavigationList>
     </StyledNavBar>
   );

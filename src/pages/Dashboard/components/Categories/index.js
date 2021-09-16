@@ -1,5 +1,4 @@
-import React, { useMemo } from "react";
-import { parseCategories } from "../../../../utils/parsers";
+import React from "react";
 import styled from "styled-components";
 
 const StyledCategories = styled.div`
@@ -58,13 +57,10 @@ const Category = ({ name, url, imageSrc }) => {
 };
 
 const Categories = ({ data }) => {
-  const categories = useMemo(() => {
-    return parseCategories(data);
-  }, [data]);
-  if (!categories?.length) return "Loading...";
+  if (!data?.length) return "Loading...";
   return (
     <StyledCategories>
-      {categories?.map((category) => (
+      {data?.map((category) => (
         <Category key={category.id} {...category} />
       ))}
     </StyledCategories>
