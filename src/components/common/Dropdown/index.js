@@ -1,34 +1,80 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 
-const Dropdown = styled.div`
-  position: relative;
-  display: inline-block
-  &:hover{
-      background-color:white;
+const StyledLink = styled(Link)`
+  text-transform: capitalize;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  &:hover {
+    background-color: #4f7990;
   }
 `;
-const DropdownContent = styled.div`
-  display: ${(props) => (props.open ? "block" : "none")}
+const StyledDropdownContent = styled.div`
   display: none;
+  margin-left: -10px;
   position: absolute;
-  background-color: #f1f1f1;
+  background-color: #4e5863;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
 `;
-const DropdownMenu = ({ value }) => {
+const visibleDropdownStyles = css`
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+`;
+
+const StyledDropdown = styled.div`
+  ${(props) =>
+    props.trigger === "click" &&
+    props.isOpen &&
+    css`
+      ${StyledDropdownContent} {
+        ${visibleDropdownStyles}
+      }
+    `}
+  ${(props) =>
+    props.trigger === "hover" &&
+    css`
+      &:hover ${StyledDropdownContent} {
+        ${visibleDropdownStyles}
+      }
+    `}
+`;
+
+const DropdownTitle = styled.div`
+  cursor: ${(props) => (props.trigger === "click" ? "pointer" : "default")};
+`;
+
+const Dropdown = ({ data, name, trigger }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleClick = () => {
+    if (trigger !== "click") {
+      return;
+    }
+    setIsOpen((prevState) => !prevState);
+  };
+
   return (
+<<<<<<< HEAD
     <Dropdown>
       <p>{value}</p>
       <DropdownContent>Content</DropdownContent>
     </Dropdown>
+=======
+    <StyledDropdown trigger={trigger} isOpen={isOpen} onClick={handleClick}>
+      <DropdownTitle trigger={trigger}>{name}</DropdownTitle>
+      <StyledDropdownContent>
+        {data?.map((item) => (
+          <StyledLink to={item.path} key={item.id}>
+            {item.name}
+          </StyledLink>
+        ))}
+      </StyledDropdownContent>
+    </StyledDropdown>
+>>>>>>> master
   );
 };
-export default DropdownMenu;
+export default Dropdown;
