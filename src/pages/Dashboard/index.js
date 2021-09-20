@@ -10,10 +10,10 @@ const StyledDashboard = styled.div`
   align-items: center;
 `;
 
-const Dashboard = ({ data }) => {
+const Dashboard = ({ categories }) => {
   return (
     <StyledDashboard>
-      <Categories data={data} />
+      <Categories categories={categories} />
     </StyledDashboard>
   );
 };

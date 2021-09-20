@@ -17,7 +17,7 @@ const App = () => {
     fetchCategories();
   }, []);
 
-  const dashboardData = useMemo(() => {
+  const parsedCategories = useMemo(() => {
     return parseCategories(categories);
   }, [categories]);
 
@@ -31,7 +31,7 @@ const App = () => {
       key: "categories",
       name: "Categories",
       path: "/categories",
-      children: [...categories],
+      children: parsedCategories,
     },
     {
       key: "signIn",
@@ -57,7 +57,7 @@ const App = () => {
             <Register />
           </Route>
           <Route path="/">
-            <Dashboard data={dashboardData} />
+            <Dashboard categories={parsedCategories} />
           </Route>
         </Switch>
       </div>

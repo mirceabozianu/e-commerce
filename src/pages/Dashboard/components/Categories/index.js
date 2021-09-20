@@ -56,11 +56,12 @@ const Category = ({ name, url, imageSrc }) => {
   );
 };
 
-const Categories = ({ data }) => {
-  if (!data?.length) return "Loading...";
+const Categories = ({ categories }) => {
+  if (!categories?.length) return "Loading...";
+
   return (
     <StyledCategories>
-      {data?.map((category) => (
+      {categories?.map((category) => (
         <Category key={category.id} {...category} />
       ))}
     </StyledCategories>

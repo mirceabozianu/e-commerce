@@ -61,9 +61,9 @@ const Dropdown = ({ data, name, trigger }) => {
     <StyledDropdown trigger={trigger} isOpen={isOpen} onClick={handleClick}>
       <DropdownTitle trigger={trigger}>{name}</DropdownTitle>
       <StyledDropdownContent>
-        {data?.map((item, index) => (
-          <StyledLink to={`/${item}`} key={index}>
-            {item}
+        {data?.map((item) => (
+          <StyledLink to={item.path} key={item.id}>
+            {item.name}
           </StyledLink>
         ))}
       </StyledDropdownContent>

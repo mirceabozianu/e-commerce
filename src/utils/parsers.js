@@ -10,7 +10,7 @@ export function parseCategories(data) {
     const dataObj = {
       name: item,
       id: index,
-      url: `/${item}`,
+      path: `/${item}`,
       imageSrc: images[index] ? images[index] : "NO IMAGE",
     };
 
