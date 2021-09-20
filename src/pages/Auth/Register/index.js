@@ -1,5 +1,10 @@
 import React from "react";
-import { AuthContainer, AuthFormWrapper } from "../components/styledForm";
+import {
+  AuthContainer,
+  AuthFormWrapper,
+  ErrorText,
+  ButtonWrapper,
+} from "../components/styledForm";
 import useInput from "../components/authHook";
 
 const Register = () => {
@@ -71,8 +76,8 @@ const Register = () => {
   return (
     <AuthContainer>
       <AuthFormWrapper>
+        <h1>Register</h1>
         <form onSubmit={formSubmitHandler}>
-          <h1>Register</h1>
           <div>
             <label htmlFor="name">Name</label>
             <input
@@ -82,7 +87,7 @@ const Register = () => {
               onChange={nameChangeHandler}
               onBlur={nameBlurHandler}
             />
-            {nameInputHasError && <p>Name must not be empty</p>}
+            {nameInputHasError && <ErrorText>Name must not be empty</ErrorText>}
           </div>
           <div>
             <label htmlFor="email-adress">Email</label>
@@ -93,7 +98,9 @@ const Register = () => {
               onChange={emailChangeHandler}
               onBlur={emailBlurHandler}
             />
-            {emailInputHasError && <p>You must type a valid email</p>}
+            {emailInputHasError && (
+              <ErrorText>You must type a valid email</ErrorText>
+            )}
           </div>
           <div>
             <label htmlFor="password">Password</label>
@@ -105,7 +112,9 @@ const Register = () => {
               onChange={passwordChangeHandler}
               onBlur={passwordBlurHandler}
             />
-            {passwordInputHasError && <p>You must type a password</p>}
+            {passwordInputHasError && (
+              <ErrorText>You must type a password</ErrorText>
+            )}
           </div>
           <div>
             <label htmlFor="password">Confirm Password</label>
@@ -119,14 +128,14 @@ const Register = () => {
             />
 
             {!isSamePassword(enteredPassword, enteredConfirmPass) && (
-              <p>You must type the same password</p>
+              <ErrorText>Passwords are not matching</ErrorText>
             )}
           </div>
-          <div>
+          <ButtonWrapper>
             <button disabled={!isFormValid} type="submit" value="Register">
               Register
             </button>
-          </div>
+          </ButtonWrapper>
         </form>
       </AuthFormWrapper>
     </AuthContainer>

@@ -3,6 +3,7 @@ import { parseCategories } from "../../../../utils/parsers";
 import styled from "styled-components";
 
 const StyledCategories = styled.div`
+  box-sizing: border-box;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -25,7 +26,7 @@ const StyledCategory = styled.div`
 const ContentWrapper = styled.div`
   padding: 3%;
   display: flex;
-  flex-direction: column;
+  flex-flow: column wrap;
   justify-content: center;
   align-items: center;
   color: white;

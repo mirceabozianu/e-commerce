@@ -13,35 +13,35 @@ export default function SignIn() {
   return (
     <AuthContainer>
       <AuthFormWrapper>
+        <h1>Sign In</h1>
         <form onSubmit={handleSubmit}>
-          <fieldset>
-            <legend>Sign In</legend>
-            <div>
-              <label htmlFor="email">Email</label>
-              <input
-                onChange={(e) => setEmail(e.target.value)}
-                type="email"
-                name="email"
-                id="email"
-                value={email}
-              />
-            </div>
-            <div>
-              <label htmlFor="password">Password</label>
-              <input
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                name="password"
-                id="password"
-                value={password}
-              />
-            </div>
-          </fieldset>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              name="email"
+              id="email"
+              value={email}
+            />
+          </div>
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              name="password"
+              id="password"
+              value={password}
+            />
+          </div>
           <div>
             <button type="submit">Sign In</button>
           </div>
           <div>
-            <button>Register</button>
+            <button>
+              <a href="/register">Register</a>
+            </button>
           </div>
         </form>
       </AuthFormWrapper>
