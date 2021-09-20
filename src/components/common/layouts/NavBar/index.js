@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../../../../pages/Dashboard/components/Logo/index";
-import DropdownMenu from "../../Dropdown/index";
+import Dropdown from "../../Dropdown";
 
 const StyledNavBar = styled.header`
   padding: 0px 20px;
@@ -14,6 +14,11 @@ const StyledNavBar = styled.header`
   width: 100%;
   box-sizing: border-box;
   background-color: #4e5863;
+  color: white;
+  a {
+    color: white;
+    text-decoration: none;
+  }
 `;
 
 const NavigationList = styled.ul`
@@ -27,37 +32,23 @@ const NavigationListItem = styled.li`
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   font-size: 14px;
-  text-decoration: none;
-  color: white;
   padding: 20px 30px;
-  margin :hover {
-    transition: 0.3s;
-    color: black;
-    background-color: rgba(0, 136, 169, 0.7);
-  }
-  a {
-    color: white;
-    text-decoration: none;
-  }
 `;
 
-const NavBar = () => {
+const NavBar = ({ data }) => {
   return (
     <StyledNavBar>
       <Logo />
-      <NavigationList>
-        <NavigationListItem>
-          <Link to="/">Home</Link>
-        </NavigationListItem>
-        <NavigationListItem>
-          <DropdownMenu>Categories</DropdownMenu>
-        </NavigationListItem>
-        <NavigationListItem>
-          <Link to="/signin">Sign in</Link>
-        </NavigationListItem>
-        <NavigationListItem>
-          <Link to="/register">Register</Link>
-        </NavigationListItem>
+      <NavigationList data={data}>
+        {data.map((item) => (
+          <NavigationListItem key={item.key}>
+            {item.children ? (
+              <Dropdown data={item.children} name={item.name} trigger="hover" />
+            ) : (
+              <Link to={item.path}>{item.name}</Link>
+            )}
+          </NavigationListItem>
+        ))}
       </NavigationList>
     </StyledNavBar>
   );
