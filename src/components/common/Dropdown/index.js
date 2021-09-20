@@ -27,12 +27,7 @@ const DropdownMenu = ({ value }) => {
   return (
     <Dropdown>
       <p>{value}</p>
-      <DropdownContent>
-        <a href="/electronics">Link 1</a>
-        <a href="/jewelery">Link 1</a>
-        <a href="/men-clothes">Link 1</a>
-        <a href="/women-clothes">Link 1</a>
-      </DropdownContent>
+      <DropdownContent>Content</DropdownContent>
     </Dropdown>
   );
 };

@@ -6,12 +6,17 @@ import {
   ButtonWrapper,
 } from "../components/styledForm";
 import useInput from "../components/authHook";
+import { oldUsers, registerUser } from "services/localStorage";
 
 const Register = () => {
   const isNotEmpty = (name) => name.trim() !== "";
   const isEmail = (value) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(value);
+  };
+  const userEmails = oldUsers.map((user) => user.email);
+  const isEmailInStorage = (email) => {
+    return userEmails.includes(email);
   };
   const isSamePassword = (pass, confirmpass) => {
     return pass === confirmpass;
@@ -56,7 +61,8 @@ const Register = () => {
     enteredEmailIsValid &&
     enteredPasswordIsValid &&
     enteredConfirmPassIsValid &&
-    isSamePassword(enteredPassword, enteredConfirmPass)
+    isSamePassword(enteredPassword, enteredConfirmPass) &&
+    !isEmailInStorage(enteredEmail)
   ) {
     isFormValid = true;
   }
@@ -66,7 +72,7 @@ const Register = () => {
     if (!isFormValid) {
       return;
     }
-
+    registerUser(enteredName, enteredEmail, enteredPassword);
     resetNameInput();
     resetEmailInput();
     resetPasswordInput();
@@ -98,6 +104,9 @@ const Register = () => {
               onChange={emailChangeHandler}
               onBlur={emailBlurHandler}
             />
+            {isEmailInStorage(enteredEmail) && (
+              <ErrorText>Email already in use</ErrorText>
+            )}
             {emailInputHasError && (
               <ErrorText>You must type a valid email</ErrorText>
             )}
