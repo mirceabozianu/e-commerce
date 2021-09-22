@@ -41,17 +41,18 @@ const ContentWrapper = styled.div`
     text-decoration: none;
     font-size: 15px;
     :hover {
+      cursor: pointer;
       background-color: rgba(165, 224, 219, 0.5);
     }
   }
 `;
 
-const Category = ({ name, url, imageSrc }) => {
+const Category = ({ name, path, imageSrc }) => {
   return (
     <StyledCategory imageSrc={imageSrc}>
       <ContentWrapper>
         <h1>{name.toUpperCase()}</h1>
-        <a href={url}>WINDOW SHOP</a>
+        <a href={path}>WINDOW SHOP</a>
       </ContentWrapper>
     </StyledCategory>
   );

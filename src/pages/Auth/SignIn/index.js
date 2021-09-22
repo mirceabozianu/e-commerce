@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { AuthContainer, AuthFormWrapper } from "../components/styledForm";
+import {
+  AuthContainer,
+  AuthFormWrapper,
+} from "pages/Auth/components/styledForm";
 
 export default function SignIn() {
   const [email, setEmail] = useState();

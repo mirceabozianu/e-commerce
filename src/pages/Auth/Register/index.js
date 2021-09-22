@@ -1,71 +1,50 @@
 import React from "react";
+import Input from "components/common/Input";
 import {
   AuthContainer,
   AuthFormWrapper,
-  ErrorText,
   ButtonWrapper,
-} from "../components/styledForm";
-import useInput from "../components/authHook";
-import { oldUsers, registerUser } from "services/localStorage";
+} from "pages/Auth/components/styledForm";
+import { useInput } from "utils/hooks";
+import { registerUser } from "services/localStorage";
+import {
+  isEmpty,
+  isNotEmail,
+  isEmailInStorage,
+  isSamePassword,
+} from "utils/validators";
 
 const Register = () => {
-  const isNotEmpty = (name) => name.trim() !== "";
-  const isEmail = (value) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(value);
-  };
-  const userEmails = oldUsers.map((user) => user.email);
-  const isEmailInStorage = (email) => {
-    return userEmails.includes(email);
-  };
-  const isSamePassword = (pass, confirmpass) => {
-    return pass === confirmpass;
-  };
-
   const {
     value: enteredName,
-    isValid: enteredNameIsValid,
-    hasError: nameInputHasError,
+    isTouched: nameIsTouched,
     valueChangeHandler: nameChangeHandler,
     valueBlurHandler: nameBlurHandler,
     reset: resetNameInput,
-  } = useInput(isNotEmpty);
+  } = useInput();
   const {
     value: enteredEmail,
-    isValid: enteredEmailIsValid,
-    hasError: emailInputHasError,
+    isTouched: emailIsTouched,
     valueChangeHandler: emailChangeHandler,
     valueBlurHandler: emailBlurHandler,
     reset: resetEmailInput,
-  } = useInput(isEmail);
+  } = useInput();
   const {
     value: enteredPassword,
-    isValid: enteredPasswordIsValid,
-    hasError: passwordInputHasError,
+    isTouched: passwordIsTouched,
     valueChangeHandler: passwordChangeHandler,
     valueBlurHandler: passwordBlurHandler,
     reset: resetPasswordInput,
-  } = useInput(isNotEmpty);
+  } = useInput();
   const {
     value: enteredConfirmPass,
-    isValid: enteredConfirmPassIsValid,
+    isTouched: confirmPassIsTouched,
     valueChangeHandler: confirmPassChangeHandler,
     valueBlurHandler: confirmPassBlurHandler,
     reset: resetConfirmPassInput,
-  } = useInput(isNotEmpty);
+  } = useInput();
 
-  let isFormValid = false;
-
-  if (
-    enteredNameIsValid &&
-    enteredEmailIsValid &&
-    enteredPasswordIsValid &&
-    enteredConfirmPassIsValid &&
-    isSamePassword(enteredPassword, enteredConfirmPass) &&
-    !isEmailInStorage(enteredEmail)
-  ) {
-    isFormValid = true;
-  }
+  const isFormValid = true;
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
@@ -84,62 +63,49 @@ const Register = () => {
       <AuthFormWrapper>
         <h1>Register</h1>
         <form onSubmit={formSubmitHandler}>
-          <div>
-            <label htmlFor="name">Name</label>
-            <input
-              name="text"
-              id="name"
-              value={enteredName}
-              onChange={nameChangeHandler}
-              onBlur={nameBlurHandler}
-            />
-            {nameInputHasError && <ErrorText>Name must not be empty</ErrorText>}
-          </div>
-          <div>
-            <label htmlFor="email-adress">Email</label>
-            <input
-              name="email-adress"
-              id="email-adress"
-              value={enteredEmail}
-              onChange={emailChangeHandler}
-              onBlur={emailBlurHandler}
-            />
-            {isEmailInStorage(enteredEmail) && (
-              <ErrorText>Email already in use</ErrorText>
-            )}
-            {emailInputHasError && (
-              <ErrorText>You must type a valid email</ErrorText>
-            )}
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              value={enteredPassword}
-              onChange={passwordChangeHandler}
-              onBlur={passwordBlurHandler}
-            />
-            {passwordInputHasError && (
-              <ErrorText>You must type a password</ErrorText>
-            )}
-          </div>
-          <div>
-            <label htmlFor="password">Confirm Password</label>
-            <input
-              type="password"
-              name="confirm-password"
-              id="confirm-password"
-              value={enteredConfirmPass}
-              onChange={confirmPassChangeHandler}
-              onBlur={confirmPassBlurHandler}
-            />
-
-            {!isSamePassword(enteredPassword, enteredConfirmPass) && (
-              <ErrorText>Passwords are not matching</ErrorText>
-            )}
-          </div>
+          <Input
+            type="text"
+            name="name"
+            id="name"
+            value={enteredName}
+            onChange={nameChangeHandler}
+            isTouched={nameIsTouched}
+            onBlur={nameBlurHandler}
+            validators={[isEmpty(enteredName, "name")]}
+          />
+          <Input
+            type="text"
+            name="email-adress"
+            id="email-adress"
+            value={enteredEmail}
+            onChange={emailChangeHandler}
+            isTouched={emailIsTouched}
+            onBlur={emailBlurHandler}
+            validators={[
+              isNotEmail(enteredEmail),
+              isEmailInStorage(enteredEmail),
+            ]}
+          />
+          <Input
+            type="password"
+            name="password"
+            id="password"
+            value={enteredPassword}
+            onChange={passwordChangeHandler}
+            onBlur={passwordBlurHandler}
+            isTouched={passwordIsTouched}
+            validators={[isEmpty(enteredPassword, "password")]}
+          />
+          <Input
+            type="password"
+            name="confirm-password"
+            id="confirm-password"
+            value={enteredConfirmPass}
+            onChange={confirmPassChangeHandler}
+            onBlur={confirmPassBlurHandler}
+            isTouched={confirmPassIsTouched}
+            validators={[isSamePassword(enteredPassword, enteredConfirmPass)]}
+          />
           <ButtonWrapper>
             <button disabled={!isFormValid} type="submit" value="Register">
               Register

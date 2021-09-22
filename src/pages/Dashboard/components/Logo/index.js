@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "../../../../assets/icons/logo.png";
+import logo from "assets/icons/logo.png";
 
 const StyledLogo = styled.div`
   box-sizing: border-box;
@@ -17,7 +17,9 @@ const StyledLogo = styled.div`
 const Logo = () => {
   return (
     <StyledLogo>
-      <img alt="logo" src={logo} />
+      <a href="/">
+        <img alt="logo" src={logo} />
+      </a>
     </StyledLogo>
   );
 };

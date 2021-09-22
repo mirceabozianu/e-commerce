@@ -21,18 +21,6 @@ export const AuthFormWrapper = styled.div`
     margin-top: -35px;
     margin-bottom: 30px;
   }
-  input {
-    text-indent: 10px;
-    border-radius: 10px;
-    padding: 7px 0px;
-    width: 210px;
-    display: block;
-    margin-top: 8px;
-  }
-  input:focus {
-    outline: none;
-    border-color: rgba(108, 122, 137, 1);
-    background-color: rgba(232, 232, 232, 1);
 `;
 export const ButtonWrapper = styled.div`
   display: flex;
@@ -47,12 +35,4 @@ export const ButtonWrapper = styled.div`
   button:disabled {
     cursor: not-allowed;
   }
-`;
-export const ErrorText = styled.p`
-  inline-size: 180px;
-  overflow-wrap: break-word;
-  overflow: hidden;
-  font-size: 13px;
-  margin-top: 3px;
-  color: #b40e0e;
 `;

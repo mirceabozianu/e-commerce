@@ -58,12 +58,6 @@ const Dropdown = ({ data, name, trigger }) => {
   };
 
   return (
-<<<<<<< HEAD
-    <Dropdown>
-      <p>{value}</p>
-      <DropdownContent>Content</DropdownContent>
-    </Dropdown>
-=======
     <StyledDropdown trigger={trigger} isOpen={isOpen} onClick={handleClick}>
       <DropdownTitle trigger={trigger}>{name}</DropdownTitle>
       <StyledDropdownContent>
@@ -74,7 +68,6 @@ const Dropdown = ({ data, name, trigger }) => {
         ))}
       </StyledDropdownContent>
     </StyledDropdown>
->>>>>>> master
   );
 };
 export default Dropdown;

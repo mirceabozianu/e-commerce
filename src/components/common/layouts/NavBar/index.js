@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Logo from "pages/Dashboard/components/Logo/index";
-import Dropdown from "../../Dropdown/index";
+import Logo from "pages/Dashboard/components/Logo";
+import Dropdown from "components/common/Dropdown";
 
 const StyledNavBar = styled.header`
   padding: 0px 20px;
