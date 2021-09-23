@@ -44,11 +44,27 @@ const Register = () => {
     reset: resetConfirmPassInput,
   } = useInput();
 
-  const isFormValid = true;
+  const nameValidators = [isEmpty(enteredName, "name")];
+  const emailValidators = [
+    isNotEmail(enteredEmail),
+    isEmailInStorage(enteredEmail),
+  ];
+  const passwordValidators = [isEmpty(enteredPassword, "password")];
+  const confirmPassValidators = [
+    isSamePassword(enteredPassword, enteredConfirmPass),
+  ];
+  const isFormNotValid = [
+    nameValidators,
+    emailValidators,
+    passwordValidators,
+    confirmPassValidators,
+  ]
+    .flat()
+    .some((validator) => typeof validator === "string");
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
-    if (!isFormValid) {
+    if (isFormNotValid) {
       return;
     }
     registerUser(enteredName, enteredEmail, enteredPassword);
@@ -65,49 +81,46 @@ const Register = () => {
         <form onSubmit={formSubmitHandler}>
           <Input
             type="text"
-            name="name"
+            name="Name"
             id="name"
             value={enteredName}
             onChange={nameChangeHandler}
             isTouched={nameIsTouched}
             onBlur={nameBlurHandler}
-            validators={[isEmpty(enteredName, "name")]}
+            validators={nameValidators}
           />
           <Input
             type="text"
-            name="email-adress"
+            name="Email Adress"
             id="email-adress"
             value={enteredEmail}
             onChange={emailChangeHandler}
             isTouched={emailIsTouched}
             onBlur={emailBlurHandler}
-            validators={[
-              isNotEmail(enteredEmail),
-              isEmailInStorage(enteredEmail),
-            ]}
+            validators={emailValidators}
           />
           <Input
             type="password"
-            name="password"
+            name="Password"
             id="password"
             value={enteredPassword}
             onChange={passwordChangeHandler}
             onBlur={passwordBlurHandler}
             isTouched={passwordIsTouched}
-            validators={[isEmpty(enteredPassword, "password")]}
+            validators={passwordValidators}
           />
           <Input
             type="password"
-            name="confirm-password"
+            name="Confirm Password"
             id="confirm-password"
             value={enteredConfirmPass}
             onChange={confirmPassChangeHandler}
             onBlur={confirmPassBlurHandler}
             isTouched={confirmPassIsTouched}
-            validators={[isSamePassword(enteredPassword, enteredConfirmPass)]}
+            validators={confirmPassValidators}
           />
           <ButtonWrapper>
-            <button disabled={!isFormValid} type="submit" value="Register">
+            <button disabled={isFormNotValid} type="submit" value="Register">
               Register
             </button>
           </ButtonWrapper>

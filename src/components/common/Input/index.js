@@ -34,7 +34,7 @@ const Input = ({
   validators,
 }) => {
   const getErrorMessages = validators
-    .filter((validator) => typeof validator === "string")
+    .filter((validatorFunc) => typeof validatorFunc === "string")
     .map((errorMessage) => (
       <ErrorText key={errorMessage}>{errorMessage}</ErrorText>
     ));
