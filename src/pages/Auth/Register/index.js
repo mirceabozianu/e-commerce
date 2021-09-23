@@ -6,7 +6,7 @@ import {
   ButtonWrapper,
 } from "pages/Auth/components/styledForm";
 import { useInput } from "utils/hooks";
-import { registerUser } from "services/localStorage";
+import { setUsers } from "services/localStorage";
 import {
   isEmpty,
   isNotEmail,
@@ -67,7 +67,7 @@ const Register = () => {
     if (isFormNotValid) {
       return;
     }
-    registerUser(enteredName, enteredEmail, enteredPassword);
+    setUsers(enteredName, enteredEmail, enteredPassword);
     resetNameInput();
     resetEmailInput();
     resetPasswordInput();

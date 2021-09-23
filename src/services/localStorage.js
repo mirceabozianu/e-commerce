@@ -1,13 +1,14 @@
 import lscache from "lscache";
 
-lscache.setBucket("auth");
-
-if (lscache.get("users") === null) {
+export function initLocalStorage() {
   lscache.set("users", []);
+  lscache.set("persisted", true);
 }
-export const oldUsers = lscache.get("users");
 
-export const registerUser = (name, email, password) => {
-  oldUsers.push({ name, email, password });
-  lscache.set("users", oldUsers);
+export const getUsers = () => {
+  return lscache.get("users");
+};
+
+export const setUsers = (name, email, password) => {
+  lscache.set("users", [{ name, email, password }, ...getUsers()]);
 };
