@@ -23,16 +23,21 @@ export const ErrorText = styled.p`
   color: #b40e0e;
 `;
 
-const Input = ({ type, name, id, errors, ...otherProps }) => {
-  const displayErrorMessages = errors.map((errorMessage) => (
-    <ErrorText key={errorMessage}>{errorMessage}</ErrorText>
-  ));
+const Input = ({ type, name, id, errors, ...rest }) => {
+  const displayErrorMessages = () => {
+    if (!rest.isTouched) {
+      return null;
+    }
+    return errors.map((errorMessage) => (
+      <ErrorText key={errorMessage}>{errorMessage}</ErrorText>
+    ));
+  };
 
   return (
     <div>
       <label htmlFor={name}>{name}</label>
-      <StyledInput type={type} name={name} id={id} {...otherProps} />
-      {otherProps.isTouched && displayErrorMessages}
+      <StyledInput type={type} name={name} id={id} {...rest} />
+      {displayErrorMessages()}
     </div>
   );
 };

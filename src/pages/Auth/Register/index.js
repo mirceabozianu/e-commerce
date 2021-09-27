@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "components/common/Input";
 import {
   AuthContainer,
@@ -9,31 +9,30 @@ import { useInput } from "utils/hooks";
 import { setUsers } from "services/localStorage";
 import {
   getErrorMessages,
-  isEmpty,
-  isNotEmail,
+  isNotEmpty,
+  isEmail,
   isSamePassword,
   isEmailInStorage,
 } from "utils/validators";
 
 const Register = () => {
-  const nameInputField = useInput();
-  const emailInputField = useInput();
-  const passwordInputField = useInput();
-  const confirmPassInputField = useInput();
-
-  const nameErrors = [isEmpty(nameInputField.value, "name")];
-  const emailErrors = [
-    isNotEmail(emailInputField.value),
-    isEmailInStorage(emailInputField.value),
-  ];
-  const passwordErrors = [isEmpty(passwordInputField.value, "password")];
-  const confirmPassErrors = [
-    isSamePassword(passwordInputField.value, confirmPassInputField.value),
-  ];
-
+  const [successMessage, setSuccessMessage] = useState(false);
+  const nameInputField = useInput([isNotEmpty]);
+  const emailInputField = useInput([isEmail, isNotEmpty]);
+  const passwordInputField = useInput([isNotEmpty]);
+  const confirmPassInputField = useInput([isNotEmpty]);
+  const samePasswordError = isSamePassword(
+    passwordInputField.value,
+    confirmPassInputField.value
+  );
   const isFormNotValid =
-    getErrorMessages(nameErrors, emailErrors, passwordErrors, confirmPassErrors)
-      .length > 0;
+    getErrorMessages([
+      nameInputField.errors,
+      emailInputField.errors,
+      passwordInputField.errors,
+      confirmPassInputField.errors,
+      samePasswordError,
+    ]).flat().length > 0;
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
@@ -46,8 +45,11 @@ const Register = () => {
         email: emailInputField.value,
         password: passwordInputField.value,
       });
-    } else {
-      return <p>Email in use</p>;
+      nameInputField.resetInput();
+      emailInputField.resetInput();
+      passwordInputField.resetInput();
+      confirmPassInputField.resetInput();
+      setSuccessMessage(true);
     }
   };
 
@@ -56,33 +58,27 @@ const Register = () => {
       <AuthFormWrapper>
         <h1>Register</h1>
         <form onSubmit={formSubmitHandler}>
-          <Input
-            type="text"
-            name="Name"
-            id="name"
-            errors={getErrorMessages(nameErrors)}
-            {...nameInputField}
-          />
+          <Input type="text" name="Name" id="name" {...nameInputField} />
           <Input
             type="text"
             name="Email Adress"
             id="email-adress"
-            errors={getErrorMessages(emailErrors)}
             {...emailInputField}
           />
           <Input
             type="password"
             name="Password"
             id="password"
-            errors={getErrorMessages(passwordErrors)}
             {...passwordInputField}
           />
           <Input
             type="password"
             name="Confirm Password"
             id="confirm-password"
-            errors={getErrorMessages(confirmPassErrors)}
             {...confirmPassInputField}
+            errors={[...confirmPassInputField.errors, samePasswordError].filter(
+              Boolean
+            )}
           />
           <ButtonWrapper>
             <button disabled={isFormNotValid} type="submit" value="Register">
@@ -90,6 +86,7 @@ const Register = () => {
             </button>
           </ButtonWrapper>
         </form>
+        {successMessage && <p>User was created successfully.</p>}
       </AuthFormWrapper>
     </AuthContainer>
   );
