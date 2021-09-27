@@ -7,7 +7,13 @@ import {
 } from "pages/Auth/components/styledForm";
 import { useInput } from "utils/hooks";
 import { setUsers } from "services/localStorage";
-import { isEmpty, isNotEmail, isSamePassword } from "utils/validators";
+import {
+  getErrorMessages,
+  isEmpty,
+  isNotEmail,
+  isSamePassword,
+  isEmailInStorage,
+} from "utils/validators";
 
 const Register = () => {
   const nameInputField = useInput();
@@ -16,15 +22,14 @@ const Register = () => {
   const confirmPassInputField = useInput();
 
   const nameErrors = [isEmpty(nameInputField.value, "name")];
-  const emailErrors = [isNotEmail(emailInputField.value)];
+  const emailErrors = [
+    isNotEmail(emailInputField.value),
+    isEmailInStorage(emailInputField.value),
+  ];
   const passwordErrors = [isEmpty(passwordInputField.value, "password")];
   const confirmPassErrors = [
     isSamePassword(passwordInputField.value, confirmPassInputField.value),
   ];
-
-  const getErrorMessages = (...errors) => {
-    return errors.flat().filter((error) => Boolean(error) !== false);
-  };
 
   const isFormNotValid =
     getErrorMessages(nameErrors, emailErrors, passwordErrors, confirmPassErrors)
@@ -35,12 +40,15 @@ const Register = () => {
     if (isFormNotValid) {
       return;
     }
-
-    setUsers({
-      name: nameInputField.value,
-      email: emailInputField.value,
-      password: passwordInputField.value,
-    });
+    if (!isEmailInStorage(emailInputField.value)) {
+      setUsers({
+        name: nameInputField.value,
+        email: emailInputField.value,
+        password: passwordInputField.value,
+      });
+    } else {
+      return <p>Email in use</p>;
+    }
   };
 
   return (
