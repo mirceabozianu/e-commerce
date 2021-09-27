@@ -9,6 +9,6 @@ export const getUsers = () => {
   return lscache.get("users");
 };
 
-export const setUsers = (name, email, password) => {
-  lscache.set("users", [{ name, email, password }, ...getUsers()]);
+export const setUsers = (user) => {
+  lscache.set("users", [user, ...getUsers()]);
 };

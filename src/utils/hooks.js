@@ -4,23 +4,16 @@ export const useInput = () => {
   const [enteredValue, setEnteredValue] = useState("");
   const [isTouched, setIsTouched] = useState(false);
 
-  const valueChangeHandler = (event) => {
+  const onChange = (event) => {
     setEnteredValue(event.target.value);
   };
-  const valueBlurHandler = () => {
+  const onBlur = () => {
     setIsTouched(true);
   };
-
-  const reset = () => {
-    setEnteredValue("");
-    setIsTouched(false);
-  };
-
   return {
     value: enteredValue,
     isTouched,
-    valueChangeHandler,
-    valueBlurHandler,
-    reset,
+    onChange,
+    onBlur,
   };
 };

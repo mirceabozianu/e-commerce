@@ -7,71 +7,40 @@ import {
 } from "pages/Auth/components/styledForm";
 import { useInput } from "utils/hooks";
 import { setUsers } from "services/localStorage";
-import {
-  isEmpty,
-  isNotEmail,
-  isEmailInStorage,
-  isSamePassword,
-} from "utils/validators";
+import { isEmpty, isNotEmail, isSamePassword } from "utils/validators";
 
 const Register = () => {
-  const {
-    value: enteredName,
-    isTouched: nameIsTouched,
-    valueChangeHandler: nameChangeHandler,
-    valueBlurHandler: nameBlurHandler,
-    reset: resetNameInput,
-  } = useInput();
-  const {
-    value: enteredEmail,
-    isTouched: emailIsTouched,
-    valueChangeHandler: emailChangeHandler,
-    valueBlurHandler: emailBlurHandler,
-    reset: resetEmailInput,
-  } = useInput();
-  const {
-    value: enteredPassword,
-    isTouched: passwordIsTouched,
-    valueChangeHandler: passwordChangeHandler,
-    valueBlurHandler: passwordBlurHandler,
-    reset: resetPasswordInput,
-  } = useInput();
-  const {
-    value: enteredConfirmPass,
-    isTouched: confirmPassIsTouched,
-    valueChangeHandler: confirmPassChangeHandler,
-    valueBlurHandler: confirmPassBlurHandler,
-    reset: resetConfirmPassInput,
-  } = useInput();
+  const nameInputField = useInput();
+  const emailInputField = useInput();
+  const passwordInputField = useInput();
+  const confirmPassInputField = useInput();
 
-  const nameValidators = [isEmpty(enteredName, "name")];
-  const emailValidators = [
-    isNotEmail(enteredEmail),
-    isEmailInStorage(enteredEmail),
+  const nameErrors = [isEmpty(nameInputField.value, "name")];
+  const emailErrors = [isNotEmail(emailInputField.value)];
+  const passwordErrors = [isEmpty(passwordInputField.value, "password")];
+  const confirmPassErrors = [
+    isSamePassword(passwordInputField.value, confirmPassInputField.value),
   ];
-  const passwordValidators = [isEmpty(enteredPassword, "password")];
-  const confirmPassValidators = [
-    isSamePassword(enteredPassword, enteredConfirmPass),
-  ];
-  const isFormNotValid = [
-    nameValidators,
-    emailValidators,
-    passwordValidators,
-    confirmPassValidators,
-  ]
-    .flat()
-    .some((validator) => typeof validator === "string");
+
+  const getErrorMessages = (...errors) => {
+    return errors.flat().filter((error) => Boolean(error) !== false);
+  };
+
+  const isFormNotValid =
+    getErrorMessages(nameErrors, emailErrors, passwordErrors, confirmPassErrors)
+      .length > 0;
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
     if (isFormNotValid) {
       return;
     }
-    setUsers(enteredName, enteredEmail, enteredPassword);
-    resetNameInput();
-    resetEmailInput();
-    resetPasswordInput();
-    resetConfirmPassInput();
+
+    setUsers({
+      name: nameInputField.value,
+      email: emailInputField.value,
+      password: passwordInputField.value,
+    });
   };
 
   return (
@@ -83,41 +52,29 @@ const Register = () => {
             type="text"
             name="Name"
             id="name"
-            value={enteredName}
-            onChange={nameChangeHandler}
-            isTouched={nameIsTouched}
-            onBlur={nameBlurHandler}
-            validators={nameValidators}
+            errors={getErrorMessages(nameErrors)}
+            {...nameInputField}
           />
           <Input
             type="text"
             name="Email Adress"
             id="email-adress"
-            value={enteredEmail}
-            onChange={emailChangeHandler}
-            isTouched={emailIsTouched}
-            onBlur={emailBlurHandler}
-            validators={emailValidators}
+            errors={getErrorMessages(emailErrors)}
+            {...emailInputField}
           />
           <Input
             type="password"
             name="Password"
             id="password"
-            value={enteredPassword}
-            onChange={passwordChangeHandler}
-            onBlur={passwordBlurHandler}
-            isTouched={passwordIsTouched}
-            validators={passwordValidators}
+            errors={getErrorMessages(passwordErrors)}
+            {...passwordInputField}
           />
           <Input
             type="password"
             name="Confirm Password"
             id="confirm-password"
-            value={enteredConfirmPass}
-            onChange={confirmPassChangeHandler}
-            onBlur={confirmPassBlurHandler}
-            isTouched={confirmPassIsTouched}
-            validators={confirmPassValidators}
+            errors={getErrorMessages(confirmPassErrors)}
+            {...confirmPassInputField}
           />
           <ButtonWrapper>
             <button disabled={isFormNotValid} type="submit" value="Register">

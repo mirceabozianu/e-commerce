@@ -23,34 +23,16 @@ export const ErrorText = styled.p`
   color: #b40e0e;
 `;
 
-const Input = ({
-  type,
-  name,
-  id,
-  value,
-  onChange,
-  onBlur,
-  isTouched,
-  validators,
-}) => {
-  const getErrorMessages = validators
-    .filter((validatorFunc) => typeof validatorFunc === "string")
-    .map((errorMessage) => (
-      <ErrorText key={errorMessage}>{errorMessage}</ErrorText>
-    ));
+const Input = ({ type, name, id, errors, ...otherProps }) => {
+  const displayErrorMessages = errors.map((errorMessage) => (
+    <ErrorText key={errorMessage}>{errorMessage}</ErrorText>
+  ));
 
   return (
     <div>
       <label htmlFor={name}>{name}</label>
-      <StyledInput
-        type={type}
-        name={name}
-        id={id}
-        value={value}
-        onChange={onChange}
-        onBlur={onBlur}
-      />
-      {getErrorMessages.length > 0 && isTouched && getErrorMessages}
+      <StyledInput type={type} name={name} id={id} {...otherProps} />
+      {otherProps.isTouched && displayErrorMessages}
     </div>
   );
 };
