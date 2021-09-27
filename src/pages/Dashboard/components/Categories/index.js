@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledCategories = styled.div`
+  box-sizing: border-box;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -24,7 +25,7 @@ const StyledCategory = styled.div`
 const ContentWrapper = styled.div`
   padding: 3%;
   display: flex;
-  flex-direction: column;
+  flex-flow: column wrap;
   justify-content: center;
   align-items: center;
   color: white;
@@ -40,17 +41,18 @@ const ContentWrapper = styled.div`
     text-decoration: none;
     font-size: 15px;
     :hover {
+      cursor: pointer;
       background-color: rgba(165, 224, 219, 0.5);
     }
   }
 `;
 
-const Category = ({ name, url, imageSrc }) => {
+const Category = ({ name, path, imageSrc }) => {
   return (
     <StyledCategory imageSrc={imageSrc}>
       <ContentWrapper>
         <h1>{name.toUpperCase()}</h1>
-        <a href={url}>WINDOW SHOP</a>
+        <a href={path}>WINDOW SHOP</a>
       </ContentWrapper>
     </StyledCategory>
   );
