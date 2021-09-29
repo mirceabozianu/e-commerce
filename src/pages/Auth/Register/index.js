@@ -8,7 +8,6 @@ import {
 import { useInput } from "utils/hooks";
 import { setUsers } from "services/localStorage";
 import {
-  getErrorMessages,
   isNotEmpty,
   isEmail,
   isSamePassword,
@@ -21,10 +20,9 @@ const Register = () => {
   const emailInputField = useInput([isEmail, isNotEmpty]);
   const passwordInputField = useInput([isNotEmpty]);
   const confirmPassInputField = useInput([isNotEmpty]);
-  const samePasswordError = isSamePassword(
-    passwordInputField.value,
-    confirmPassInputField.value
-  );
+  const samePasswordError = [
+    isSamePassword(passwordInputField.value, confirmPassInputField.value),
+  ].filter(Boolean);
 
   const areInputsBlurred =
     nameInputField.isTouched &&
@@ -32,14 +30,16 @@ const Register = () => {
     passwordInputField.isTouched &&
     confirmPassInputField.isTouched;
 
+  const inputFieldErrors = [
+    nameInputField.errors,
+    emailInputField.errors,
+    passwordInputField.errors,
+    confirmPassInputField.errors,
+    samePasswordError,
+  ];
+
   const isFormNotValid = areInputsBlurred
-    ? getErrorMessages([
-        nameInputField.errors,
-        emailInputField.errors,
-        passwordInputField.errors,
-        confirmPassInputField.errors,
-        samePasswordError,
-      ]).flat().length > 0
+    ? inputFieldErrors.flat().length > 0
     : true;
 
   const formSubmitHandler = (event) => {
@@ -84,16 +84,10 @@ const Register = () => {
             name="Confirm Password"
             id="confirm-password"
             {...confirmPassInputField}
-            errors={[...confirmPassInputField.errors, samePasswordError].filter(
-              Boolean
-            )}
+            errors={[...confirmPassInputField.errors, samePasswordError]}
           />
           <ButtonWrapper>
-            <button
-              area-disabled={isFormNotValid}
-              type="submit"
-              value="Register"
-            >
+            <button disabled={isFormNotValid} type="submit" value="Register">
               Register
             </button>
           </ButtonWrapper>

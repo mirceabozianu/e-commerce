@@ -28,9 +28,11 @@ const Input = ({ type, name, id, errors, ...rest }) => {
     if (!rest.isTouched) {
       return null;
     }
-    return errors.map((errorMessage) => (
-      <ErrorText key={errorMessage}>{errorMessage}</ErrorText>
-    ));
+    return errors
+      .filter(Boolean)
+      .map((errorMessage) => (
+        <ErrorText key={errorMessage}>{errorMessage}</ErrorText>
+      ));
   };
 
   return (

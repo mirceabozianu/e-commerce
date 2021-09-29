@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Input from "components/common/Input";
 import { useInput } from "utils/hooks";
 import {
@@ -9,34 +10,27 @@ import {
 import {
   isNotEmpty,
   isEmail,
-  isEmailInStorage,
+  isEmailNotInStorage,
   isPasswordIncorrect,
 } from "utils/validators";
 
 const SignIn = () => {
   const emailInputField = useInput([isNotEmpty, isEmail]);
   const passwordInputField = useInput([isNotEmpty]);
-  const [successMessage, setSuccessMessage] = useState(false);
-  const [emailErrors, setEmailErrors] = useState([]);
-  const [passwordErrors, setPasswordErrors] = useState([]);
+  const [emailErrors, setEmailErrors] = useState(false);
+  const [passwordErrors, setPasswordErrors] = useState(false);
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    if (!isEmailInStorage(emailInputField.value)) {
-      setEmailErrors([
-        ...emailInputField.errors,
-        isEmailInStorage(emailInputField.value, "Email cannot be found"),
-      ]);
+    if (isEmailNotInStorage(emailInputField.value)) {
+      setEmailErrors([isEmailNotInStorage(emailInputField.value)]);
       return;
     }
     if (isPasswordIncorrect(emailInputField.value, passwordInputField.value)) {
       setPasswordErrors([
-        ...passwordInputField.errors,
         isPasswordIncorrect(emailInputField.value, passwordInputField.value),
       ]);
       return;
-    } else {
-      setSuccessMessage(true);
     }
   };
   return (
@@ -49,14 +43,14 @@ const SignIn = () => {
             name="Email Adress"
             value="email-adress"
             {...emailInputField}
-            errors={emailErrors.filter(Boolean)}
+            errors={[...emailInputField.errors, emailErrors]}
           />
           <Input
             type="password"
             name="Password"
             value="password"
             {...passwordInputField}
-            errors={passwordErrors.filter(Boolean)}
+            errors={[...passwordInputField.errors, passwordErrors]}
           />
           <ButtonWrapper>
             <button type="submit" value="Sign In">
@@ -65,11 +59,10 @@ const SignIn = () => {
           </ButtonWrapper>
           <ButtonWrapper>
             <button type="button" value="Register">
-              <a href="register">Register</a>
+              <Link to="/register">Register</Link>
             </button>
           </ButtonWrapper>
         </form>
-        {successMessage && <p>You are logged in!</p>}
       </AuthFormWrapper>
     </AuthContainer>
   );
