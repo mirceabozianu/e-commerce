@@ -25,14 +25,22 @@ const Register = () => {
     passwordInputField.value,
     confirmPassInputField.value
   );
-  const isFormNotValid =
-    getErrorMessages([
-      nameInputField.errors,
-      emailInputField.errors,
-      passwordInputField.errors,
-      confirmPassInputField.errors,
-      samePasswordError,
-    ]).flat().length > 0;
+
+  const areInputsBlurred =
+    nameInputField.isTouched &&
+    emailInputField.isTouched &&
+    passwordInputField.isTouched &&
+    confirmPassInputField.isTouched;
+
+  const isFormNotValid = areInputsBlurred
+    ? getErrorMessages([
+        nameInputField.errors,
+        emailInputField.errors,
+        passwordInputField.errors,
+        confirmPassInputField.errors,
+        samePasswordError,
+      ]).flat().length > 0
+    : true;
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
@@ -81,7 +89,11 @@ const Register = () => {
             )}
           />
           <ButtonWrapper>
-            <button disabled={isFormNotValid} type="submit" value="Register">
+            <button
+              area-disabled={isFormNotValid}
+              type="submit"
+              value="Register"
+            >
               Register
             </button>
           </ButtonWrapper>

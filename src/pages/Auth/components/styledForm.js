@@ -25,14 +25,17 @@ export const AuthFormWrapper = styled.div`
 export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 15px;
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
   button {
+    width: 100px;
     border-radius: 9px;
     cursor: pointer;
     font-size: 17px;
-    padding: 4px 9px;
-  }
-  button:disabled {
-    cursor: not-allowed;
+    padding: 4px 15px;
   }
 `;

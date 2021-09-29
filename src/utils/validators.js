@@ -1,10 +1,10 @@
 import { getUsers } from "services/localStorage";
 
-export const isEmailInStorage = (email) => {
+export const isEmailInStorage = (email, message = false) => {
   const users = getUsers();
   return users?.map((user) => user.email).includes(email)
     ? "Email already in use"
-    : false;
+    : message;
 };
 
 export const getErrorMessages = (errors) => errors.filter(Boolean);
@@ -19,4 +19,13 @@ export const isEmail = (value) => {
 
 export const isSamePassword = (pass, confirmpass) => {
   return !(pass === confirmpass) ? "Passwords do not match" : false;
+};
+
+export const isPasswordIncorrect = (email, password) => {
+  const users = getUsers();
+  return users
+    .filter((user) => user.email === email)
+    .every((user) => user.password !== password)
+    ? "Incorrect password"
+    : false;
 };
