@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Input from "components/common/Input";
 import { useInput } from "utils/hooks";
 import {
@@ -14,25 +14,38 @@ import {
   isPasswordIncorrect,
 } from "utils/validators";
 
-const SignIn = () => {
+const SignIn = ({ history }) => {
   const emailInputField = useInput([isNotEmpty, isEmail]);
   const passwordInputField = useInput([isNotEmpty]);
-  const [emailErrors, setEmailErrors] = useState(false);
-  const [passwordErrors, setPasswordErrors] = useState(false);
+  const [emailErrorsOnSubmit, setEmailErrorsOnSubmit] = useState(false);
+  const [passwordErrorsOnSubmit, setPasswordErrorsOnSubmit] = useState(false);
+
+  const inputFieldErrors = [
+    emailInputField.errors,
+    !emailInputField.isTouched,
+    passwordInputField.errors,
+    !passwordInputField.isTouched,
+  ]
+    .flat()
+    .filter(Boolean);
+
+  const isFormNotValid = inputFieldErrors.length > 0;
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
     if (isEmailNotInStorage(emailInputField.value)) {
-      setEmailErrors([isEmailNotInStorage(emailInputField.value)]);
+      setEmailErrorsOnSubmit([isEmailNotInStorage(emailInputField.value)]);
       return;
     }
     if (isPasswordIncorrect(emailInputField.value, passwordInputField.value)) {
-      setPasswordErrors([
+      setPasswordErrorsOnSubmit([
         isPasswordIncorrect(emailInputField.value, passwordInputField.value),
       ]);
       return;
     }
+    history.push("/");
   };
+
   return (
     <AuthContainer>
       <AuthFormWrapper>
@@ -43,17 +56,17 @@ const SignIn = () => {
             name="Email Adress"
             value="email-adress"
             {...emailInputField}
-            errors={[...emailInputField.errors, emailErrors]}
+            errors={[...emailInputField.errors, emailErrorsOnSubmit]}
           />
           <Input
             type="password"
             name="Password"
             value="password"
             {...passwordInputField}
-            errors={[...passwordInputField.errors, passwordErrors]}
+            errors={[...passwordInputField.errors, passwordErrorsOnSubmit]}
           />
           <ButtonWrapper>
-            <button type="submit" value="Sign In">
+            <button disabled={isFormNotValid} type="submit" value="Sign In">
               Sign In
             </button>
           </ButtonWrapper>
@@ -67,4 +80,4 @@ const SignIn = () => {
     </AuthContainer>
   );
 };
-export default SignIn;
+export default withRouter(SignIn);

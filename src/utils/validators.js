@@ -7,7 +7,7 @@ export const isEmailInStorage = (email, message = "Email already in use") => {
 
 export const isEmailNotInStorage = (email, message = "Email was not found") => {
   const users = getUsers();
-  return users?.find((user) => user.email !== email) ? message : false;
+  return !users?.find((user) => user.email === email) ? message : false;
 };
 
 export const isNotEmpty = (value) =>

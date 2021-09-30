@@ -20,9 +20,10 @@ const Register = () => {
   const emailInputField = useInput([isEmail, isNotEmpty]);
   const passwordInputField = useInput([isNotEmpty]);
   const confirmPassInputField = useInput([isNotEmpty]);
-  const samePasswordError = [
-    isSamePassword(passwordInputField.value, confirmPassInputField.value),
-  ].filter(Boolean);
+  const samePasswordError = isSamePassword(
+    passwordInputField.value,
+    confirmPassInputField.value
+  );
 
   const areInputsBlurred =
     nameInputField.isTouched &&
@@ -36,7 +37,7 @@ const Register = () => {
     passwordInputField.errors,
     confirmPassInputField.errors,
     samePasswordError,
-  ];
+  ].filter(Boolean);
 
   const isFormNotValid = areInputsBlurred
     ? inputFieldErrors.flat().length > 0
