@@ -1,53 +1,83 @@
 import React, { useState } from "react";
+import { Link, withRouter } from "react-router-dom";
+import Input from "components/common/Input";
+import { useInput } from "utils/hooks";
 import {
   AuthContainer,
   AuthFormWrapper,
+  ButtonWrapper,
 } from "pages/Auth/components/styledForm";
+import {
+  isNotEmpty,
+  isEmail,
+  isEmailNotInStorage,
+  isPasswordIncorrect,
+} from "utils/validators";
 
-export default function SignIn() {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+const SignIn = ({ history }) => {
+  const emailInputField = useInput([isNotEmpty, isEmail]);
+  const passwordInputField = useInput([isNotEmpty]);
+  const [emailErrorsOnSubmit, setEmailErrorsOnSubmit] = useState(false);
+  const [passwordErrorsOnSubmit, setPasswordErrorsOnSubmit] = useState(false);
+
+  const inputFieldErrors = [
+    emailInputField.errors,
+    !emailInputField.isTouched,
+    passwordInputField.errors,
+    !passwordInputField.isTouched,
+  ]
+    .flat()
+    .filter(Boolean);
+
+  const isFormNotValid = inputFieldErrors.length > 0;
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    setEmail("");
-    setPassword("");
+    if (isEmailNotInStorage(emailInputField.value)) {
+      setEmailErrorsOnSubmit([isEmailNotInStorage(emailInputField.value)]);
+      return;
+    }
+    if (isPasswordIncorrect(emailInputField.value, passwordInputField.value)) {
+      setPasswordErrorsOnSubmit([
+        isPasswordIncorrect(emailInputField.value, passwordInputField.value),
+      ]);
+      return;
+    }
+    history.push("/");
   };
+
   return (
     <AuthContainer>
       <AuthFormWrapper>
         <h1>Sign In</h1>
         <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input
-              onChange={(e) => setEmail(e.target.value)}
-              type="email"
-              name="email"
-              id="email"
-              value={email}
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              onChange={(e) => setPassword(e.target.value)}
-              type="password"
-              name="password"
-              id="password"
-              value={password}
-            />
-          </div>
-          <div>
-            <button type="submit">Sign In</button>
-          </div>
-          <div>
-            <button>
-              <a href="/register">Register</a>
+          <Input
+            type="text"
+            name="Email Adress"
+            value="email-adress"
+            {...emailInputField}
+            errors={[...emailInputField.errors, emailErrorsOnSubmit]}
+          />
+          <Input
+            type="password"
+            name="Password"
+            value="password"
+            {...passwordInputField}
+            errors={[...passwordInputField.errors, passwordErrorsOnSubmit]}
+          />
+          <ButtonWrapper>
+            <button disabled={isFormNotValid} type="submit" value="Sign In">
+              Sign In
             </button>
-          </div>
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <button type="button" value="Register">
+              <Link to="/register">Register</Link>
+            </button>
+          </ButtonWrapper>
         </form>
       </AuthFormWrapper>
     </AuthContainer>
   );
-}
+};
+export default withRouter(SignIn);

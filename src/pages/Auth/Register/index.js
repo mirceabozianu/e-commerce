@@ -8,7 +8,6 @@ import {
 import { useInput } from "utils/hooks";
 import { setUsers } from "services/localStorage";
 import {
-  getErrorMessages,
   isNotEmpty,
   isEmail,
   isSamePassword,
@@ -25,14 +24,24 @@ const Register = () => {
     passwordInputField.value,
     confirmPassInputField.value
   );
-  const isFormNotValid =
-    getErrorMessages([
-      nameInputField.errors,
-      emailInputField.errors,
-      passwordInputField.errors,
-      confirmPassInputField.errors,
-      samePasswordError,
-    ]).flat().length > 0;
+
+  const areInputsBlurred =
+    nameInputField.isTouched &&
+    emailInputField.isTouched &&
+    passwordInputField.isTouched &&
+    confirmPassInputField.isTouched;
+
+  const inputFieldErrors = [
+    nameInputField.errors,
+    emailInputField.errors,
+    passwordInputField.errors,
+    confirmPassInputField.errors,
+    samePasswordError,
+  ].filter(Boolean);
+
+  const isFormNotValid = areInputsBlurred
+    ? inputFieldErrors.flat().length > 0
+    : true;
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
@@ -76,9 +85,7 @@ const Register = () => {
             name="Confirm Password"
             id="confirm-password"
             {...confirmPassInputField}
-            errors={[...confirmPassInputField.errors, samePasswordError].filter(
-              Boolean
-            )}
+            errors={[...confirmPassInputField.errors, samePasswordError]}
           />
           <ButtonWrapper>
             <button disabled={isFormNotValid} type="submit" value="Register">
