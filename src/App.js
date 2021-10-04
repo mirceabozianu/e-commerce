@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route } from "react-router-dom";
 import Dashboard from "pages/Dashboard";
 import SignIn from "pages/Auth/SignIn";
 import Register from "pages/Auth/Register";
 import NavBar from "components/common/layouts/NavBar";
 import { getCategories } from "services/api";
 import { parseCategories } from "utils/parsers";
+import history from "services/history";
 
 const App = () => {
   const [categories, setCategories] = useState([]);
@@ -46,17 +47,17 @@ const App = () => {
   ];
 
   return (
-    <Router>
+    <Router history={history}>
       <NavBar data={navBarData} />
       <Switch>
+        <Route path="/" exact>
+          <Dashboard categories={parsedCategories} />
+        </Route>
         <Route path="/signin">
           <SignIn />
         </Route>
         <Route path="/register">
           <Register />
-        </Route>
-        <Route path="/">
-          <Dashboard categories={parsedCategories} />
         </Route>
       </Switch>
     </Router>

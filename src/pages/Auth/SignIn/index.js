@@ -13,8 +13,9 @@ import {
   isEmailNotInStorage,
   isPasswordIncorrect,
 } from "utils/validators";
+import history from "services/history";
 
-const SignIn = ({ history }) => {
+const SignIn = () => {
   const emailInputField = useInput([isNotEmpty, isEmail]);
   const passwordInputField = useInput([isNotEmpty]);
   const [emailErrorsOnSubmit, setEmailErrorsOnSubmit] = useState(false);
