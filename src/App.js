@@ -1,26 +1,25 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Router, Switch, Route } from "react-router-dom";
 import Dashboard from "pages/Dashboard";
 import SignIn from "pages/Auth/SignIn";
 import Register from "pages/Auth/Register";
 import NavBar from "components/common/layouts/NavBar";
 import { getCategories } from "services/api";
-import { parseCategories } from "utils/parsers";
+import { productActions } from "state/state";
 import history from "services/history";
 
 const App = () => {
-  const [categories, setCategories] = useState([]);
-  useEffect(() => {
-    async function fetchCategories() {
-      const res = await getCategories();
-      setCategories(res);
-    }
-    fetchCategories();
-  }, []);
+  const categories = useSelector((state) => state.products.categories);
+  const dispatch = useDispatch();
 
-  const parsedCategories = useMemo(() => {
-    return parseCategories(categories);
-  }, [categories]);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await getCategories();
+      dispatch(productActions.setCategories(res));
+    };
+    fetchCategories();
+  }, [dispatch]);
 
   const navBarData = [
     {
@@ -32,7 +31,7 @@ const App = () => {
       key: "categories",
       name: "Categories",
       path: "/categories",
-      children: parsedCategories,
+      children: categories,
     },
     {
       key: "signIn",
@@ -51,7 +50,7 @@ const App = () => {
       <NavBar data={navBarData} />
       <Switch>
         <Route path="/" exact>
-          <Dashboard categories={parsedCategories} />
+          <Dashboard categories={categories} />
         </Route>
         <Route path="/signin">
           <SignIn />
