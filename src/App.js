@@ -1,25 +1,24 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { Router, Switch, Route } from "react-router-dom";
 import Dashboard from "pages/Dashboard";
 import SignIn from "pages/Auth/SignIn";
 import Register from "pages/Auth/Register";
 import NavBar from "components/common/layouts/NavBar";
-import { getCategories } from "services/api";
-import { productActions } from "state/state";
 import history from "services/history";
+import { getCategories } from "services/api";
+import { setCategories } from "state/categories/actions";
+import { parseCategories } from "utils/parsers";
 
-const App = () => {
-  const categories = useSelector((state) => state.products.categories);
-  const dispatch = useDispatch();
-
+const App = ({ categories, setCategories }) => {
   useEffect(() => {
     const fetchCategories = async () => {
-      const res = await getCategories();
-      dispatch(productActions.setCategories(res));
+      const resp = await getCategories();
+      const parsedResp = parseCategories(resp);
+      setCategories(parsedResp);
     };
     fetchCategories();
-  }, [dispatch]);
+  }, [setCategories]);
 
   const navBarData = [
     {
@@ -63,4 +62,9 @@ const App = () => {
   );
 };
 
-export default App;
+export default connect(
+  (state) => ({
+    categories: state.categories.categories,
+  }),
+  { setCategories }
+)(App);
