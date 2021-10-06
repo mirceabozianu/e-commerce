@@ -1,25 +1,17 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { Router, Switch, Route } from "react-router-dom";
 import Dashboard from "pages/Dashboard";
 import SignIn from "pages/Auth/SignIn";
 import Register from "pages/Auth/Register";
 import NavBar from "components/common/layouts/NavBar";
-import { getCategories } from "services/api";
-import { parseCategories } from "utils/parsers";
+import history from "services/history";
+import { setCategories } from "state/categories/actions";
 
-const App = () => {
-  const [categories, setCategories] = useState([]);
+const App = ({ categories, setCategories }) => {
   useEffect(() => {
-    async function fetchCategories() {
-      const res = await getCategories();
-      setCategories(res);
-    }
-    fetchCategories();
-  }, []);
-
-  const parsedCategories = useMemo(() => {
-    return parseCategories(categories);
-  }, [categories]);
+    setCategories();
+  }, [setCategories]);
 
   const navBarData = [
     {
@@ -31,7 +23,7 @@ const App = () => {
       key: "categories",
       name: "Categories",
       path: "/categories",
-      children: parsedCategories,
+      children: categories,
     },
     {
       key: "signIn",
@@ -46,21 +38,26 @@ const App = () => {
   ];
 
   return (
-    <Router>
+    <Router history={history}>
       <NavBar data={navBarData} />
       <Switch>
+        <Route path="/" exact>
+          <Dashboard categories={categories} />
+        </Route>
         <Route path="/signin">
           <SignIn />
         </Route>
         <Route path="/register">
           <Register />
         </Route>
-        <Route path="/">
-          <Dashboard categories={parsedCategories} />
-        </Route>
       </Switch>
     </Router>
   );
 };
 
-export default App;
+export default connect(
+  (state) => ({
+    categories: state.categories.categories,
+  }),
+  { setCategories }
+)(App);
