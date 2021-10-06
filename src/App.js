@@ -7,15 +7,10 @@ import Register from "pages/Auth/Register";
 import NavBar from "components/common/layouts/NavBar";
 import history from "services/history";
 import { setCategories } from "state/categories/actions";
-import { getAndParseCategories } from "state/categories/constants";
 
 const App = ({ categories, setCategories }) => {
   useEffect(() => {
-    async function setData() {
-      const resp = await getAndParseCategories();
-      setCategories(resp);
-    }
-    setData();
+    setCategories();
   }, [setCategories]);
 
   const navBarData = [
