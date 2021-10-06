@@ -6,18 +6,16 @@ import SignIn from "pages/Auth/SignIn";
 import Register from "pages/Auth/Register";
 import NavBar from "components/common/layouts/NavBar";
 import history from "services/history";
-import { getCategories } from "services/api";
 import { setCategories } from "state/categories/actions";
-import { parseCategories } from "utils/parsers";
+import { getAndParseCategories } from "state/categories/constants";
 
 const App = ({ categories, setCategories }) => {
   useEffect(() => {
-    const fetchCategories = async () => {
-      const resp = await getCategories();
-      const parsedResp = parseCategories(resp);
-      setCategories(parsedResp);
-    };
-    fetchCategories();
+    async function setData() {
+      const resp = await getAndParseCategories();
+      setCategories(resp);
+    }
+    setData();
   }, [setCategories]);
 
   const navBarData = [
