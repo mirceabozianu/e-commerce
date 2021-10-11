@@ -4,6 +4,7 @@ import { Router, Switch, Route } from "react-router-dom";
 import Dashboard from "pages/Dashboard";
 import SignIn from "pages/Auth/SignIn";
 import Register from "pages/Auth/Register";
+import Products from "pages/Products";
 import NavBar from "components/common/layouts/NavBar";
 import history from "services/history";
 import { setCategories } from "state/categories/actions";
@@ -43,6 +44,18 @@ const App = ({ categories, setCategories }) => {
       <Switch>
         <Route path="/" exact>
           <Dashboard categories={categories} />
+        </Route>
+        <Route path="/electronics" exact>
+          <Products category={"electronics"} />
+        </Route>
+        <Route path="/jewelery" exact>
+          <Products category={"jewelery"} />
+        </Route>
+        <Route path="/men's clothing" exact>
+          <Products category={"men's clothing"} />
+        </Route>
+        <Route path="/women's clothing" exact>
+          <Products category={"women's clothing"} />
         </Route>
         <Route path="/signin">
           <SignIn />

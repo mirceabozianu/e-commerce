@@ -1,8 +1,8 @@
 import { getCategories } from "services/api";
 import { parseCategories } from "utils/parsers";
 
-export function setCategories() {
-  return async (dispatch, getState) => {
+export const setCategories = () => {
+  return async (dispatch) => {
     const categories = await getCategories();
 
     dispatch({
@@ -10,4 +10,4 @@ export function setCategories() {
       payload: parseCategories(categories),
     });
   };
-}
+};
