@@ -45,17 +45,8 @@ const App = ({ categories, setCategories }) => {
         <Route path="/" exact>
           <Dashboard categories={categories} />
         </Route>
-        <Route path="/electronics" exact>
-          <Products category={"electronics"} />
-        </Route>
-        <Route path="/jewelery" exact>
-          <Products category={"jewelery"} />
-        </Route>
-        <Route path="/men's clothing" exact>
-          <Products category={"men's clothing"} />
-        </Route>
-        <Route path="/women's clothing" exact>
-          <Products category={"women's clothing"} />
+        <Route path="/products/:category">
+          <Products />
         </Route>
         <Route path="/signin">
           <SignIn />

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { setProducts } from "state/products/actions";
+import { useParams } from "react-router-dom";
 
 const StyledItemList = styled.div`
   display: flex;
@@ -25,7 +26,11 @@ const StyledItem = styled.div`
 const StyledImage = styled.img`
   height: auto;
   width: 100px;
-  margin: 20px 0px;
+  padding: 20px 0px;
+`;
+const StyledPrice = styled.div`
+  position: relative;
+  padding: 20px;
 `;
 
 const Item = ({ title, image, price }) => {
@@ -35,19 +40,28 @@ const Item = ({ title, image, price }) => {
         <StyledImage src={image} />
       </div>
       <div>{title}</div>
-      <div>${price}</div>
+      <StyledPrice>${price}</StyledPrice>
       <button>Add to Cart</button>
     </StyledItem>
   );
 };
 
-const Products = ({ products, setProducts }) => {
+const Products = ({ categories, products, setProducts }) => {
   useEffect(() => {
     setProducts();
   }, [setProducts]);
+
+  const { category } = useParams();
+
+  const wantedCategory = categories.find((item) => item.id === category);
+
+  const filteredProducts = products.filter(
+    (product) => product.category === wantedCategory.name
+  );
+
   return (
-    <StyledItemList products={products}>
-      {products.map((product) => {
+    <StyledItemList products={filteredProducts}>
+      {filteredProducts.map((product) => {
         return (
           <Item
             key={product.id}
@@ -62,11 +76,10 @@ const Products = ({ products, setProducts }) => {
 };
 
 export default connect(
-  (state, ownProps) => {
+  (state) => {
     return {
-      products: state.products.products.filter(
-        (product) => product.category === ownProps.category
-      ),
+      products: state.products.products,
+      categories: state.categories.categories,
     };
   },
   { setProducts }
