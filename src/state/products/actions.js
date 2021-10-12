@@ -1,4 +1,5 @@
 import { getProducts } from "services/api";
+import { multiplyProducts } from "utils/functions";
 
 export const setProducts = () => {
   return async (dispatch) => {
@@ -6,7 +7,7 @@ export const setProducts = () => {
 
     dispatch({
       type: "SET_PRODUCTS",
-      payload: products,
+      payload: multiplyProducts(products, 3),
     });
   };
 };

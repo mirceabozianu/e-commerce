@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import styled from "styled-components";
 import { setProducts } from "state/products/actions";
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
+import ItemCard from "components/common/ItemCard";
 
 const StyledItemList = styled.div`
   display: flex;
@@ -10,41 +11,6 @@ const StyledItemList = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const StyledItem = styled.div`
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: center;
-  align-items: center;
-  word-wrap: break-word;
-  height: 350px;
-  width: 250px;
-  margin: 10px;
-  padding: 20px;
-  border: 2px solid black;
-  border-radius: 10px;
-`;
-const StyledImage = styled.img`
-  height: auto;
-  width: 100px;
-  padding: 20px 0px;
-`;
-const StyledPrice = styled.div`
-  position: relative;
-  padding: 20px;
-`;
-
-const Item = ({ title, image, price }) => {
-  return (
-    <StyledItem>
-      <div>
-        <StyledImage src={image} />
-      </div>
-      <div>{title}</div>
-      <StyledPrice>${price}</StyledPrice>
-      <button>Add to Cart</button>
-    </StyledItem>
-  );
-};
 
 const Products = ({ categories, products, setProducts }) => {
   useEffect(() => {
@@ -53,7 +19,7 @@ const Products = ({ categories, products, setProducts }) => {
 
   const { category } = useParams();
 
-  const wantedCategory = categories.find((item) => item.id === category);
+  const wantedCategory = categories?.find((item) => item.id === category);
 
   const filteredProducts = products.filter(
     (product) => product.category === wantedCategory.name
@@ -61,9 +27,9 @@ const Products = ({ categories, products, setProducts }) => {
 
   return (
     <StyledItemList products={filteredProducts}>
-      {filteredProducts.map((product) => {
+      {filteredProducts?.map((product) => {
         return (
-          <Item
+          <ItemCard
             key={product.id}
             title={product.title}
             image={product.image}
