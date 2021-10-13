@@ -6,14 +6,14 @@ export const multiplyProducts = (products, multiplyingNumber) => {
     i <= multiplyingNumber * products.length;
     i += products.length
   ) {
-    const newProducts = new Array(...products.slice());
-    const mappedIdsProducts = newProducts.map((item) => {
+    const newProducts = new Array(...products);
+    const modifiedIdProducts = newProducts.map((product) => {
       return {
-        ...item,
-        id: item.id + i,
+        ...product,
+        id: product.id + i,
       };
     });
-    accumulator.push(mappedIdsProducts);
+    accumulator.push(modifiedIdProducts);
   }
-  return accumulator.flat(Infinity);
+  return accumulator.flat();
 };
