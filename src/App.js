@@ -42,18 +42,14 @@ const App = ({ categories, setCategories }) => {
     <Router history={history}>
       <NavBar data={navBarData} />
       <Switch>
-        <Route path="/" exact>
-          <Dashboard categories={categories} />
-        </Route>
-        <Route path="/products/:category">
-          <Products />
-        </Route>
-        <Route path="/signin">
-          <SignIn />
-        </Route>
-        <Route path="/register">
-          <Register />
-        </Route>
+        <Route
+          path="/"
+          exact
+          component={() => <Dashboard categories={categories} />}
+        />
+        <Route path="/products/:category" component={Products} />
+        <Route path="/signin" component={SignIn} />
+        <Route path="/register" component={Register} />
       </Switch>
     </Router>
   );

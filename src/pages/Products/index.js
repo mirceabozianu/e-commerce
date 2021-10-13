@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { setProducts } from "state/products/actions";
-import { useParams } from "react-router-dom";
+import { getProductsByCategory } from "state/products/selectors";
 import styled from "styled-components";
 import ItemCard from "components/common/ItemCard";
+import { setProducts } from "state/products/actions";
 
 const StyledItemList = styled.div`
   display: flex;
@@ -12,41 +12,25 @@ const StyledItemList = styled.div`
   align-items: center;
 `;
 
-const Products = ({ categories, products, setProducts }) => {
+const Products = ({ products, setProducts }) => {
   useEffect(() => {
     setProducts();
   }, [setProducts]);
-
-  const { category } = useParams();
-
-  const wantedCategory = categories?.find((item) => item.id === category);
-
-  const filteredProducts = products.filter(
-    (product) => product.category === wantedCategory.name
-  );
-
   return (
-    <StyledItemList products={filteredProducts}>
-      {filteredProducts?.map((product) => {
-        return (
-          <ItemCard
-            key={product.id}
-            title={product.title}
-            image={product.image}
-            price={product.price}
-          />
-        );
+    <StyledItemList products={products}>
+      {products?.map((product) => {
+        return <ItemCard key={product.id} {...product} />;
       })}
     </StyledItemList>
   );
 };
 
-export default connect(
-  (state) => {
+const mapStateToProps = () => {
+  const getProducts = getProductsByCategory();
+  return (state, ownProps) => {
     return {
-      products: state.products.products,
-      categories: state.categories.categories,
+      products: getProducts(state, ownProps),
     };
-  },
-  { setProducts }
-)(Products);
+  };
+};
+export default connect(mapStateToProps, { setProducts })(Products);

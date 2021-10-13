@@ -35,26 +35,21 @@ const ShowCase = ({ products, setProducts, categories }) => {
     return firstFourProducts.map(
       (product) =>
         product.category === categoryName && (
-          <ItemCard
-            key={product.id}
-            title={product.title}
-            image={product.image}
-            price={product.price}
-          />
+          <ItemCard key={product.id} {...product} />
         )
     );
   };
 
-  return (
-    <div>
-      {categoryNames.map((name) => (
-        <StyledShowcase key={name}>
-          <h1>{name}</h1>
-          <SyledShowcaseItem>{getProductsByCategory(name)}</SyledShowcaseItem>
-        </StyledShowcase>
-      ))}
-    </div>
-  );
+  const rendeCategoryShowcase = (name) => {
+    return (
+      <StyledShowcase key={name}>
+        <h1>{name}</h1>
+        <SyledShowcaseItem>{getProductsByCategory(name)}</SyledShowcaseItem>
+      </StyledShowcase>
+    );
+  };
+
+  return <div>{categoryNames.map((name) => rendeCategoryShowcase(name))}</div>;
 };
 
 export default connect(
