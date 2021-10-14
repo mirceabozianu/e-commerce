@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { setProducts } from "state/products/actions";
 import ItemCard from "components/common/ItemCard";
 import styled from "styled-components";
+import { getFourProductsByCategory } from "state/products/selectors";
 
 const StyledShowcase = styled.div`
   display: flex;
@@ -20,44 +21,35 @@ const SyledShowcaseItem = styled.div`
   flex-flow: row wrap;
 `;
 
-const ShowCase = ({ products, setProducts, categories }) => {
+const ShowCase = ({ products, setProducts }) => {
   useEffect(() => {
     setProducts();
   }, [setProducts]);
 
-  const categoryNames = categories?.map((category) => category.name);
-
-  const getProductsByCategory = (categoryName) => {
-    const firstFourProducts = products
-      ?.filter((product) => product.category === categoryName)
-      .slice(0, 4);
-
-    return firstFourProducts.map(
-      (product) =>
-        product.category === categoryName && (
-          <ItemCard key={product.id} {...product} />
-        )
-    );
+  const renderShowcase = (products) => {
+    return products.map((productObj) => {
+      return (
+        <StyledShowcase>
+          <h1>{productObj.category}</h1>
+          <SyledShowcaseItem key={productObj.category}>
+            {productObj.fourProducts.map((item) => (
+              <ItemCard key={item.id} {...item} />
+            ))}
+          </SyledShowcaseItem>
+        </StyledShowcase>
+      );
+    });
   };
 
-  const rendeCategoryShowcase = (name) => {
-    return (
-      <StyledShowcase key={name}>
-        <h1>{name}</h1>
-        <SyledShowcaseItem>{getProductsByCategory(name)}</SyledShowcaseItem>
-      </StyledShowcase>
-    );
-  };
-
-  return <div>{categoryNames.map((name) => rendeCategoryShowcase(name))}</div>;
+  return <div>{renderShowcase(products)}</div>;
 };
 
-export default connect(
-  (state) => {
+const mapStateToProps = () => {
+  const getFourProducts = getFourProductsByCategory();
+  return (state) => {
     return {
-      products: state.products.products,
-      categories: state.categories.categories,
+      products: getFourProducts(state),
     };
-  },
-  { setProducts }
-)(ShowCase);
+  };
+};
+export default connect(mapStateToProps, { setProducts })(ShowCase);

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getProductsByCategory } from "state/products/selectors";
+import { getProductsByCategoryAndParam } from "state/products/selectors";
 import styled from "styled-components";
 import ItemCard from "components/common/ItemCard";
 import { setProducts } from "state/products/actions";
@@ -16,6 +16,7 @@ const Products = ({ products, setProducts }) => {
   useEffect(() => {
     setProducts();
   }, [setProducts]);
+
   return (
     <StyledItemList products={products}>
       {products?.map((product) => {
@@ -26,7 +27,7 @@ const Products = ({ products, setProducts }) => {
 };
 
 const mapStateToProps = () => {
-  const getProducts = getProductsByCategory();
+  const getProducts = getProductsByCategoryAndParam();
   return (state, ownProps) => {
     return {
       products: getProducts(state, ownProps),
