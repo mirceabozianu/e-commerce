@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { getProductsByCategoryAndParam } from "state/products/selectors";
 import styled from "styled-components";
 import ItemCard from "components/common/ItemCard";
-import { setProducts } from "state/products/actions";
 
 const StyledItemList = styled.div`
   display: flex;
@@ -12,11 +11,7 @@ const StyledItemList = styled.div`
   align-items: center;
 `;
 
-const Products = ({ products, setProducts }) => {
-  useEffect(() => {
-    setProducts();
-  }, [setProducts]);
-
+const Products = ({ products }) => {
   return (
     <StyledItemList products={products}>
       {products?.map((product) => {
@@ -34,4 +29,4 @@ const mapStateToProps = () => {
     };
   };
 };
-export default connect(mapStateToProps, { setProducts })(Products);
+export default connect(mapStateToProps)(Products);

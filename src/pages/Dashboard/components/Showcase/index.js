@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { setProducts } from "state/products/actions";
 import ItemCard from "components/common/ItemCard";
 import styled from "styled-components";
 import { getFourProductsByCategory } from "state/products/selectors";
@@ -21,15 +20,11 @@ const SyledShowcaseItem = styled.div`
   flex-flow: row wrap;
 `;
 
-const ShowCase = ({ products, setProducts }) => {
-  useEffect(() => {
-    setProducts();
-  }, [setProducts]);
-
+const ShowCase = ({ products }) => {
   const renderShowcase = (products) => {
     return products.map((productObj) => {
       return (
-        <StyledShowcase>
+        <StyledShowcase key={productObj.category}>
           <h1>{productObj.category}</h1>
           <SyledShowcaseItem key={productObj.category}>
             {productObj.fourProducts.map((item) => (
@@ -52,4 +47,4 @@ const mapStateToProps = () => {
     };
   };
 };
-export default connect(mapStateToProps, { setProducts })(ShowCase);
+export default connect(mapStateToProps)(ShowCase);

@@ -5,14 +5,17 @@ import Dashboard from "pages/Dashboard";
 import SignIn from "pages/Auth/SignIn";
 import Register from "pages/Auth/Register";
 import Products from "pages/Products";
+import ProductDetails from "pages/ProductDetails";
 import NavBar from "components/common/layouts/NavBar";
 import history from "services/history";
 import { setCategories } from "state/categories/actions";
+import { setProducts } from "state/products/actions";
 
-const App = ({ categories, setCategories }) => {
+const App = ({ categories, setCategories, setProducts }) => {
   useEffect(() => {
     setCategories();
-  }, [setCategories]);
+    setProducts();
+  }, [setCategories, setProducts]);
 
   const navBarData = [
     {
@@ -47,7 +50,12 @@ const App = ({ categories, setCategories }) => {
           exact
           component={() => <Dashboard categories={categories} />}
         />
-        <Route path="/products/:category" component={Products} />
+        <Route path="/products/:category" component={Products} exact />
+        <Route
+          path="/products/:category/:id"
+          component={ProductDetails}
+          exact
+        />
         <Route path="/signin" component={SignIn} />
         <Route path="/register" component={Register} />
       </Switch>
@@ -59,5 +67,5 @@ export default connect(
   (state) => ({
     categories: state.categories.categories,
   }),
-  { setCategories }
+  { setCategories, setProducts }
 )(App);
