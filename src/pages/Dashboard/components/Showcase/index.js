@@ -20,31 +20,23 @@ const SyledShowcaseItem = styled.div`
   flex-flow: row wrap;
 `;
 
-const ShowCase = ({ products }) => {
-  const renderShowcase = (products) => {
-    return products.map((productObj) => {
-      return (
-        <StyledShowcase key={productObj.category}>
-          <h1>{productObj.category}</h1>
-          <SyledShowcaseItem key={productObj.category}>
-            {productObj.fourProducts.map((item) => (
-              <ItemCard key={item.id} {...item} />
-            ))}
-          </SyledShowcaseItem>
-        </StyledShowcase>
-      );
-    });
-  };
+const ShowCase = ({ productsObj, category, title }) => {
+  const renderedCategory = productsObj.find(
+    (prod) => prod.category === category
+  );
 
-  return <div>{renderShowcase(products)}</div>;
+  return (
+    <StyledShowcase key={renderedCategory?.category}>
+      <h1>{title}</h1>
+      <SyledShowcaseItem>
+        {renderedCategory?.fourProducts?.map((item) => (
+          <ItemCard key={item.id} {...item} />
+        ))}
+      </SyledShowcaseItem>
+    </StyledShowcase>
+  );
 };
 
-const mapStateToProps = () => {
-  const getFourProducts = getFourProductsByCategory();
-  return (state) => {
-    return {
-      products: getFourProducts(state),
-    };
-  };
-};
-export default connect(mapStateToProps)(ShowCase);
+export default connect((state) => ({
+  productsObj: getFourProductsByCategory(state),
+}))(ShowCase);

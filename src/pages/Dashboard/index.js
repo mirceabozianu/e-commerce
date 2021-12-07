@@ -13,11 +13,14 @@ const StyledDashboard = styled.div`
   flex-flow: row wrap;
 `;
 
-const Dashboard = ({ categories }) => {
+const Dashboard = () => {
   return (
     <StyledDashboard>
-      <Categories categories={categories} />
-      <Showcase />
+      <Categories />
+      <Showcase title={"Electronics"} category={"electronics"} />
+      <Showcase title={"Jewelery"} category={"jewelery"} />
+      <Showcase title={"Men's clothing"} category={"men-clothing"} />
+      <Showcase title={"Women's clothing"} category={"women-clothing"} />
     </StyledDashboard>
   );
 };

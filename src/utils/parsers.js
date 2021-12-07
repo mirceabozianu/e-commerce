@@ -34,3 +34,12 @@ export function parseCategories(data) {
     return dataObj;
   });
 }
+
+export function replaceCategoryName(products) {
+  return products.map((item) => {
+    return {
+      ...item,
+      category: item.category.replace(`'s `, `-`),
+    };
+  });
+}

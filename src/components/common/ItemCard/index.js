@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { getMatchingPath } from "state/products/selectors";
 
 const StyledItem = styled.div`
   display: flex;
@@ -39,10 +37,10 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const ItemCard = ({ title, image, price, id, path }) => {
+const ItemCard = ({ title, image, price, id, category }) => {
   return (
     <StyledItem>
-      <StyledLink to={`${path}/${id}`}>
+      <StyledLink to={`/products/${category}/${id}`}>
         <div>
           <StyledImage src={image} />
         </div>
@@ -54,12 +52,4 @@ const ItemCard = ({ title, image, price, id, path }) => {
   );
 };
 
-const mapStateToProps = () => {
-  const matchingPath = getMatchingPath();
-  return (state, ownProps) => {
-    return {
-      path: matchingPath(state, ownProps),
-    };
-  };
-};
-export default connect(mapStateToProps)(ItemCard);
+export default ItemCard;

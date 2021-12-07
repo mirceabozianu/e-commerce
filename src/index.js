@@ -4,12 +4,15 @@ import lscache from "lscache";
 import { initLocalStorage } from "services/localStorage";
 import "./index.css";
 import App from "./App";
-import store from "services/store";
+import { store, persistor } from "services/store";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>,
   document.getElementById("root"),
   () => {

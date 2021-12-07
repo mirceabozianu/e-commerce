@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import styled from "styled-components";
 import Logo from "pages/Dashboard/components/Logo";
 import Dropdown from "components/common/Dropdown";
+import { setCategories } from "state/categories/actions";
 
 const StyledNavBar = styled.header`
   padding: 0px 20px;
@@ -35,7 +37,10 @@ const NavigationListItem = styled.li`
   padding: 20px 30px;
 `;
 
-const NavBar = ({ data }) => {
+const NavBar = ({ data, setCategories }) => {
+  useEffect(() => {
+    setCategories();
+  }, [setCategories]);
   return (
     <StyledNavBar>
       <Logo />
@@ -53,4 +58,33 @@ const NavBar = ({ data }) => {
     </StyledNavBar>
   );
 };
-export default NavBar;
+export default connect(
+  (state) => {
+    return {
+      data: [
+        {
+          key: "home",
+          name: "Home",
+          path: "/",
+        },
+        {
+          key: "categories",
+          name: "Categories",
+          path: "/categories",
+          children: state.categories.categories,
+        },
+        {
+          key: "signIn",
+          name: "Sign In",
+          path: "/signin",
+        },
+        {
+          key: "register",
+          name: "Register",
+          path: "/register",
+        },
+      ],
+    };
+  },
+  { setCategories }
+)(NavBar);

@@ -10,25 +10,27 @@ const StyledImage = styled.img`
 `;
 
 const ProductDetails = ({ wantedproduct }) => {
-  return (
-    <div>
+  if (wantedproduct) {
+    return (
       <div>
-        <StyledImage src={wantedproduct.image} />
+        <div>
+          <StyledImage src={wantedproduct.image} />
+        </div>
+        <div>{wantedproduct.title}</div>
+        <div>{wantedproduct.price}</div>
+        <div>{wantedproduct.category}</div>
+        <div>{wantedproduct.description}</div>
+        <button>Add to Cart</button>
       </div>
-      <div>{wantedproduct.title}</div>
-      <div>{wantedproduct.price}</div>
-      <div>{wantedproduct.category}</div>
-      <div>{wantedproduct.description}</div>
-      <button>Add to Cart</button>
-    </div>
-  );
+    );
+  }
+  return <div>Product not found</div>;
 };
 
 const mapStateToProps = () => {
-  const getWantedProduct = getProductById();
   return (state, ownProps) => {
     return {
-      wantedproduct: getWantedProduct(state, ownProps),
+      wantedproduct: getProductById(state, ownProps),
     };
   };
 };
