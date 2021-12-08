@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 const StyledCategories = styled.div`
   box-sizing: border-box;
@@ -52,7 +54,7 @@ const Category = ({ name, path, imageSrc }) => {
     <StyledCategory imageSrc={imageSrc}>
       <ContentWrapper>
         <h1>{name.toUpperCase()}</h1>
-        <a href={path}>WINDOW SHOP</a>
+        <Link to={path}>WINDOW SHOP</Link>
       </ContentWrapper>
     </StyledCategory>
   );
@@ -70,4 +72,8 @@ const Categories = ({ categories }) => {
   );
 };
 
-export default Categories;
+export default connect((state) => {
+  return {
+    categories: state.categories.categories,
+  };
+})(Categories);
