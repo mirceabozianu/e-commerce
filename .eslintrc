@@ -7,7 +7,7 @@
     "plugin:jsx-a11y/recommended"
   ],
   "rules": {
-    "prettier/prettier": 1,
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "react/prop-types": 0,
     "prefer-destructuring": 0,
     "no-underscore-dangle": 0,
